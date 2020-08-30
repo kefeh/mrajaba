@@ -1,6 +1,5 @@
 import React from 'react'
 import '../Stylesheets/Assets.css'
-import GetAppIcon from '@material-ui/icons/GetApp';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 
 function TestPage() {

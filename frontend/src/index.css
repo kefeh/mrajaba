@@ -7,6 +7,7 @@
   --faded-red: #f80f0fa4;
   --rusty-green: #3C661B;
   --rusty-green-dark: #5E5E60;
+  --fnt-normal: 13px;
 }
 body {
   margin: 0;
@@ -16,6 +17,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Roboto', sans-serif;
+  background-color: var(--secondary-color);
 }
 
 code {

@@ -1,0 +1,45 @@
+.file {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 12rem;
+    position: relative;
+}
+.file__delete-buttone {
+    display: inline-block;
+    position: absolute;
+    top: -1.2rem;
+    right: -0.5rem;
+    padding: 0.4rem;
+    background-color: var(--primary-color);
+    border-radius: 10rem;
+    border: 2px solid var(--faded-red);
+    color: var(--faded-red);
+}
+.file__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    background-color: var(--primary-color);
+}
+
+.file__content > img {
+    width: 8rem;
+    height: 8rem;
+}
+.file__title {
+    margin-top: 1rem;
+    font-size: var(--fnt-normal);
+    color: var(--rusty-green-dark);
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
