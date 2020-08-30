@@ -4,6 +4,7 @@ import TestPage from './Components/TestPage';
 import Search from './Components/Search';
 import File from './Components/File';
 import FloatingButton from './Components/FloatingButton';
+import Folder from './Components/Folder';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Search/>
       <File/>
       <FloatingButton/>
+      <Folder/>
     </div>
   );
 }
