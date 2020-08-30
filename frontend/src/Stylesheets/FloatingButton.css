@@ -1,0 +1,23 @@
+.floating-action {
+    display: inline-block;
+    position: relative;
+    padding: 1rem;
+}
+
+.floating-action__side {
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    top: -2.5rem;
+    left: -7rem;
+    position: absolute;
+}
+
+.floating-action__side > div{
+    margin-bottom: 0.6rem;
+}
+
+.floating-action:hover
+.floating-action__side {
+    display: flex;
+}

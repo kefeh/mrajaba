@@ -3,6 +3,7 @@ import './App.css';
 import TestPage from './Components/TestPage';
 import Search from './Components/Search';
 import File from './Components/File';
+import FloatingButton from './Components/FloatingButton';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <TestPage/>
       <Search/>
       <File/>
+      <FloatingButton/>
     </div>
   );
 }
