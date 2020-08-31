@@ -5,6 +5,7 @@
     justify-content: space-between;
     width: 12rem;
     position: relative;
+    margin-bottom: 2rem;
 }
 .file__delete-buttone {
     display: inline-block;

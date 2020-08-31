@@ -1,0 +1,19 @@
+.content-section {
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+.content-section__floating-button {
+    position: absolute;
+    top: 40%;
+    right: 1rem;
+}
+
+.content-section__main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 4rem 5rem;
+}

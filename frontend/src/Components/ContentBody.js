@@ -4,6 +4,7 @@ import '../Stylesheets/Assets.css';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import PeopleIcon from '@material-ui/icons/People';
 import Search from './Search';
+import ContentSection from './ContentSection';
 
 function ContentBody() {
     return (
@@ -40,7 +41,7 @@ function ContentBody() {
                     </div>
                 </div>
             </div>
-            <div className="content-body__content"></div>
+            <ContentSection />
         </div>
     )
 }
