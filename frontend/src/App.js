@@ -6,16 +6,13 @@ import File from './Components/File';
 import FloatingButton from './Components/FloatingButton';
 import Folder from './Components/Folder';
 import News from './Components/News';
+import MainContent from './Components/MainContent';
 
 function App() {
   return (
     <div className="App">
       <News />
-      <TestPage/>
-      <Search/>
-      <File/>
-      <FloatingButton/>
-      <Folder/>
+      <MainContent />
     </div>
   );
 }
