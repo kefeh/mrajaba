@@ -1,7 +1,7 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     width: 25rem;
     background-color: var(--primary-color);
@@ -31,4 +31,8 @@
 .sidebar__list-item-icon {
     margin-right: 5rem;
     padding-left: 3rem;
+}
+
+.sidebar__btn {
+    justify-self: end;
 }
