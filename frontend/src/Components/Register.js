@@ -1,30 +1,31 @@
 import React from 'react'
 import '../Stylesheets/Assets.css'
 import '../Stylesheets/Register.css'
+import '../Stylesheets/Auth.css'
 
 function Register() {
     return (
         <div className="register">
-            <div className="register__image">
+            <div className="auth__image">
                 <img src="../images/auth.png" alt=""/>
             </div>
-            <form action="" className="register__form">
-                <div className="form-item register__form-name">
+            <form action="" className="auth__form">
+                <div className="form-item auth__form-name">
                     <label>Name</label>
                     <input type="text"/>
                 </div>
 
-                <div className="form-item register__form-email">
+                <div className="form-item auth__form-email">
                     <label>Email</label>
                     <input type="text"/>
                 </div>
                 
-                <div className="form-item register__form-password">
+                <div className="form-item auth__form-password">
                     <label>Password</label>
                     <input type="password"/>
                 </div>
 
-                <div className="form-item register__form-confirm-password">
+                <div className="form-item auth__form-confirm-password">
                     <label>Confirm Password</label>
                     <input type="password"/>
                 </div>
@@ -33,7 +34,7 @@ function Register() {
                     <label>Admin</label>
                 </div>
 
-                <div className="register__buttons">
+                <div className="auth__buttons">
                     <div className='btn btn__outline'>
                         <span>Cancel</span>
                     </div>

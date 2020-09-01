@@ -1,0 +1,38 @@
+.auth__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 60%;
+    margin-left: -10%;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-item > input {
+    width: 20rem;
+    padding: 0.6rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    outline: none;
+    border: 2px solid hsla(0, 0%, 0%, 0.6);
+}
+
+.auth__buttons{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.auth__buttons > div {
+    margin-left: 2rem;
+}
+
+.auth__image > img {
+    width: 500px
+}
