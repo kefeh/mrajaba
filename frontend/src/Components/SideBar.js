@@ -2,8 +2,18 @@ import React from 'react'
 import '../Stylesheets/SideBar.css'
 import AddIcon from '@material-ui/icons/Add';
 import GroupIcon from '@material-ui/icons/Group';
+import { useStateValue } from '../Data/StateProvider';
 
 function SideBar() {
+    const [{}, dispatch] = useStateValue();
+
+    const toggleShowRegister = () => {
+        dispatch({
+            type: 'SHOW_REGISTER',
+            item: true
+        })
+    }
+
     return (
         <div className="sidebar">
             <div className="sidebar__title">
@@ -59,7 +69,7 @@ function SideBar() {
                     </div>
                </div>
             </div>
-            <div className="btn btn__icon-btn sidebar__btn">
+            <div onClick={toggleShowRegister} className="btn btn__icon-btn sidebar__btn">
                     <AddIcon className="icon"/>
                 </div>
         </div>

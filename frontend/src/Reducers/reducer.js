@@ -5,9 +5,12 @@ export const initialState = {
 function reducer (state, action) {
     switch(action.type) {
         case 'SHOW_REGISTER':
-            break;
+            return {
+                ...state,
+                showRegister: true,
+            };
         case 'HIDE_REGISTER':
-            break;
+            return {state};
         default:
             return state;
     }

@@ -1,17 +1,20 @@
 import React from 'react';
 import './App.css';
-import Register from './Components/Register';
-import Login from './Components/Login';
-import News from './Components/News';
 import MainContent from './Components/MainContent';
+import News from './Components/News';
+import Register from './Components/Register';
+import { useStateValue } from './Data/StateProvider';
 
 function App() {
+  const [{showRegister}] = useStateValue();
   return (
     <div className="App">
-      {/* <News />
-      <MainContent /> */}
-      <Register/>
-      {/* <Login /> */}
+      { typeof(showRegister) === 'undefined' || showRegister === false ?  
+      ( <>
+        <News />
+        <MainContent /> 
+      </> ):
+      <Register/>}
     </div>
   );
 }

@@ -2,8 +2,17 @@ import React from 'react'
 import '../Stylesheets/Assets.css'
 import '../Stylesheets/Register.css'
 import '../Stylesheets/Auth.css'
+import { useStateValue } from '../Data/StateProvider'
 
 function Register() {
+    const [{}, dispatch] = useStateValue();
+
+    const toggleShowRegister = () => {
+        dispatch({
+            type: 'HIDE_REGISTER',
+            item: false
+        })
+    }
     return (
         <div className="register">
             <div className="auth__image">
@@ -35,7 +44,7 @@ function Register() {
                 </div>
 
                 <div className="auth__buttons">
-                    <div className='btn btn__outline'>
+                    <div onClick={toggleShowRegister} className='btn btn__outline'>
                         <span>Cancel</span>
                     </div>
                     <div className='btn btn__primary'>
