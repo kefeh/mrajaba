@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import $ from 'jquery';
 import '../Stylesheets/Assets.css'
 import '../Stylesheets/Register.css'
 import '../Stylesheets/Auth.css'
@@ -7,12 +8,64 @@ import { useStateValue } from '../Data/StateProvider'
 function Register() {
     const [{}, dispatch] = useStateValue();
 
+    // creating the states
+    const [name, setName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [admin, setAdmin] = useState(null);
+    const [confirm_password, setConfirmPassword] = useState(null);
+
     const toggleShowRegister = () => {
         dispatch({
             type: 'HIDE_REGISTER',
             item: false
         })
     }
+
+    const register = () => {
+        $.ajax({
+          url: `/user`, //TODO: update request URL
+          type: "POST",
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            name: name,
+            email: email,
+            password: email,
+            admin: admin,
+          }),
+          success: (result) => {
+            // console.log(result.data)
+            alert("success")
+            return;
+          },
+          error: (error) => {
+            alert('Unable to load classes. Please try your request again')
+            return;
+          }
+        })
+      }
+
+    const  handleNameChange = (event) => {
+        setName(event.target.value)
+      }
+
+    const  handleEmailChange = (event) => {
+        setEmail(event.target.value)
+      }
+
+    const  handlePasswordChange = (event) => {
+        setPassword(event.target.value)
+      }
+
+    const  handleConfirmPasswordChange = (event) => {
+        setConfirmPassword(event.target.value)
+      }
+    
+    const  handleAdminChange = (event) => {
+        setAdmin(event.target.value)
+      }
+
     return (
         <div className="register">
             <div className="auth__image">
@@ -21,25 +74,25 @@ function Register() {
             <form action="" className="auth__form">
                 <div className="form-item auth__form-name">
                     <label>Name</label>
-                    <input type="text"/>
+                    <input type="text" name="name" onChange={handleNameChange}/>
                 </div>
 
                 <div className="form-item auth__form-email">
                     <label>Email</label>
-                    <input type="text"/>
+                    <input type="text" name="email" onChange={handleEmailChange}/>
                 </div>
                 
                 <div className="form-item auth__form-password">
                     <label>Password</label>
-                    <input type="password"/>
+                    <input type="password" name="password" onChange={handlePasswordChange}/>
                 </div>
 
                 <div className="form-item auth__form-confirm-password">
                     <label>Confirm Password</label>
-                    <input type="password"/>
+                    <input type="password" name="password_confirm" onChange={handleConfirmPasswordChange}/>
                 </div>
                 <div className="checkbox">
-                    <input type="checkbox"/>
+                    <input type="checkbox" name="admin" onChange={handleAdminChange}/>
                     <label>Admin</label>
                 </div>
 
@@ -47,7 +100,7 @@ function Register() {
                     <div onClick={toggleShowRegister} className='btn btn__outline'>
                         <span>Cancel</span>
                     </div>
-                    <div className='btn btn__primary'>
+                    <div onClick={register} className='btn btn__primary'>
                         <span>save</span>
                     </div>
                 </div>
