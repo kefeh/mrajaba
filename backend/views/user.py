@@ -6,7 +6,8 @@ def register_user(request):
         signup_resp['success'] = False
     else:
         signup_resp['success'] = True
-        return signup_resp
+        signup_resp['status_code'] = 200
+    return signup_resp
 
 
 def login_user(request):
@@ -15,4 +16,5 @@ def login_user(request):
         login_resp['success'] = False
     else:
         login_resp['success'] = True
-        return login_resp
+        login_resp['status_code'] = 200
+    return login_resp
