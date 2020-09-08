@@ -22,25 +22,34 @@ function Register() {
         })
     }
 
+    const addUser = (user) => {
+        dispatch({
+            type: 'ADD_USER',
+            item: user
+        })
+    }
+
     const register = () => {
         $.ajax({
-          url: `/user`, //TODO: update request URL
+          url: `/register`, //TODO: update request URL
           type: "POST",
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify({
             name: name,
             email: email,
-            password: email,
+            password: password,
             admin: admin,
           }),
           success: (result) => {
-            // console.log(result.data)
-            alert("success")
+            console.log(result.user);
+            alert("success");
+            addUser(result.user)
+            toggleShowRegister();
             return;
           },
           error: (error) => {
-            alert('Unable to load classes. Please try your request again')
+            alert('Unable to signup. Please try your request again')
             return;
           }
         })
