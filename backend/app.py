@@ -18,7 +18,8 @@ def create_user():
     try:
         print("registering")
         register_resp = register_user(request)
-        return jsonify(register_resp), 200
+        status_code = register_resp.pop('status_code', 200)
+        return jsonify(register_resp), status_code
     except Exception as e:
         return f"An Error Occured: {e}"
 
@@ -28,7 +29,8 @@ def login_user():
     try:
         print("registering")
         login_resp = login_user(request)
-        return jsonify(login_resp), 200
+        status_code = login_resp.pop('status_code', 200)
+        return jsonify(login_resp), status_code
     except Exception as e:
         return f"An Error Occured: {e}"
 
