@@ -5,27 +5,35 @@ import News from './Components/News';
 import Register from './Components/Register';
 import Login from './Components/Login';
 import { useStateValue } from './Data/StateProvider';
-
+import { Redirect } from 'react-router-dom';
 
 import {
   BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
+import client from './services/Client';
 
 function App() {
-  const [{showRegister}] = useStateValue();
+  const [{showRegister, user}] = useStateValue();
   return (
     <div className="App">
       <Router>
         <Switch>
           <Route path="/" exact>
-            { typeof(showRegister) === 'undefined' || showRegister === false ?  
+            {
+              client.isLoggedIn() ? (
+                 typeof(showRegister) === 'undefined' || showRegister === false ?  
             ( <>
               <News />
               <MainContent /> 
             </> ):
-            <Register/>}
+            <Register/>
+                ) : (
+                <Redirect to='/login'/>
+            )
+            }
+            
           </Route>
           <Route path="/login" component={Login} />
           {/* <Route path="/logout" component={Logout} /> */}
