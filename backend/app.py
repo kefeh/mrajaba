@@ -12,13 +12,23 @@ app = Flask(__name__)
 def hello():
     return "Hello World!"
 
-@app.route('/user', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def create_user():
     from views.user import register_user
     try:
         print("registering")
         register_resp = register_user(request)
         return jsonify(register_resp), 200
+    except Exception as e:
+        return f"An Error Occured: {e}"
+
+@app.route('/login', methods=['POST'])
+def login_user():
+    from views.user import login_user
+    try:
+        print("registering")
+        login_resp = login_user(request)
+        return jsonify(login_resp), 200
     except Exception as e:
         return f"An Error Occured: {e}"
 
