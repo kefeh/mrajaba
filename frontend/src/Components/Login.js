@@ -6,6 +6,8 @@ import '../Stylesheets/Auth.css'
 import { useStateValue } from '../Data/StateProvider'
 import Loader from './Loader';
 
+import { Redirect } from 'react-router-dom';
+
 function Login() {
     const [{}, dispatch] = useStateValue();
 
@@ -13,6 +15,7 @@ function Login() {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [isloading, setIsloading] = useState(false);
+    const [shouldRedirect, setShouldRedirect] = useState(false);
 
     const addUser = (user) => {
         dispatch({
@@ -34,9 +37,8 @@ function Login() {
           }),
           success: (result) => {
             console.log(result.user);
-            alert("success");
             addUser(result.user)
-            setIsloading(false)
+            setShouldRedirect(true)
             return;
           },
           error: (error) => {
@@ -55,7 +57,9 @@ function Login() {
     const  handlePasswordChange = (event) => {
         setPassword(event.target.value)
       }
-
+    if(shouldRedirect){
+       return (<Redirect to='/'/>) 
+    }
     if(isloading) {
       return (
         <Loader/>
@@ -81,7 +85,7 @@ function Login() {
                         <div className='btn btn__outline'>
                             <span>Cancel</span>
                         </div>
-                        <div className='btn btn__primary'>
+                        <div onClick={login} className='btn btn__primary'>
                             <span>save</span>
                         </div>
                     </div>
