@@ -50,8 +50,10 @@ def login_user_util(request):
     try:
         user = auth.sign_in_with_email_and_password(
             email, password)
-        user_info = users.document().get('email' == email)
+        user_info = users.where('email', '==', email).limit(1).get()[0].to_dict()
+        
         jwt = user['idToken']
+        print(user_info)
         user_info = {**user_info, "token": jwt}
 
         return {
@@ -64,6 +66,8 @@ def login_user_util(request):
         return{'error': f"unable to signup user {exception}",
                 'status_code': 400}
     except Exception as ex:
+        import traceback
+        traceback.print_exc()
         print(ex)
         return{'error': f"unable to signup user SEVER ERROR",
                 'status_code': 490}
