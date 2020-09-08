@@ -4,6 +4,7 @@ import '../Stylesheets/Assets.css'
 import '../Stylesheets/Register.css'
 import '../Stylesheets/Auth.css'
 import { useStateValue } from '../Data/StateProvider'
+import Loader from './Loader';
 
 function Register() {
     const [{}, dispatch] = useStateValue();
@@ -15,6 +16,7 @@ function Register() {
     const [admin, setAdmin] = useState(null);
     const [confirm_password, setConfirmPassword] = useState(null);
     const [match_password, setMatchPassword] = useState(true);
+    const [isloading, setIsloading] = useState(false);
 
     const toggleShowRegister = () => {
         dispatch({
@@ -35,6 +37,7 @@ function Register() {
           setMatchPassword(false)
           return;
         }
+        setIsloading(true)
         $.ajax({
           url: `/register`, //TODO: update request URL
           type: "POST",
@@ -49,13 +52,15 @@ function Register() {
           success: (result) => {
             console.log(result.user);
             alert("success");
-            addUser(result.user)
+            // addUser(result.user)
+            setIsloading(false)
             toggleShowRegister();
             return;
           },
           error: (error) => {
             console.log(error)
             alert(error.responseJSON.error)
+            setIsloading(false)
             return;
           }
         })
@@ -74,6 +79,7 @@ function Register() {
       }
 
     const  handleConfirmPasswordChange = (event) => {
+        setMatchPassword(true)
         setConfirmPassword(event.target.value)
       }
     
@@ -81,8 +87,15 @@ function Register() {
         setAdmin(event.target.value)
       }
 
-    return (
+    if(isloading) {
+      return (
+        <Loader/>
+      )
+    }
+    else {
+      return (
         <div className="register">
+          
             <div className="auth__image">
                 <img src="../images/auth.png" alt=""/>
             </div>
@@ -124,6 +137,8 @@ function Register() {
             </form>
         </div>
     )
+    }
+    
 }
 
 export default Register
