@@ -18,7 +18,7 @@ function reducer (state, action) {
                 showRegister: false,
             };
         case 'ADD_USER':
-            client.setDataAndToken(user)
+            client.setDataAndToken(action.item)
             return {
                 ...state,
                 user: action.item

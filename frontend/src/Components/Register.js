@@ -49,7 +49,8 @@ function Register() {
             return;
           },
           error: (error) => {
-            alert('Unable to signup. Please try your request again')
+            console.log(error)
+            alert(error.responseJSON.error)
             return;
           }
         })
