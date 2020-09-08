@@ -14,6 +14,7 @@ function Register() {
     const [password, setPassword] = useState(null);
     const [admin, setAdmin] = useState(null);
     const [confirm_password, setConfirmPassword] = useState(null);
+    const [match_password, setMatchPassword] = useState(true);
 
     const toggleShowRegister = () => {
         dispatch({
@@ -30,6 +31,10 @@ function Register() {
     }
 
     const register = () => {
+        if(password !== confirm_password){
+          setMatchPassword(false)
+          return;
+        }
         $.ajax({
           url: `/register`, //TODO: update request URL
           type: "POST",
@@ -98,7 +103,9 @@ function Register() {
                 </div>
 
                 <div className="form-item auth__form-confirm-password">
-                    <label>Confirm Password</label>
+                    <label>Confirm Password  
+                      {!match_password?<strong style={{color: "red"}}> Password doesnt match</strong>:<></>}
+                    </label>
                     <input type="password" name="password_confirm" onChange={handleConfirmPasswordChange}/>
                 </div>
                 <div className="checkbox">
