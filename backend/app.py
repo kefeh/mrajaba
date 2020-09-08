@@ -15,12 +15,12 @@ def hello():
 @app.route('/user', methods=['POST'])
 def create_user():
     from views.user import register_user
-    # try:
-    print("registering")
-    register_user(request)
-    return jsonify({"Success": True}), 200
-    # except Exception as e:
-    #     return f"An Error Occured: {e}"
+    try:
+        print("registering")
+        register_resp = register_user(request)
+        return jsonify(register_resp), 200
+    except Exception as e:
+        return f"An Error Occured: {e}"
 
 @app.route('/add', methods=['POST'])
 def create():
