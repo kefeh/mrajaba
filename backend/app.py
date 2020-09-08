@@ -27,7 +27,7 @@ def create_user():
 def login_user():
     from views.user import login_user
     try:
-        print("registering")
+        print("Login in")
         login_resp = login_user(request)
         status_code = login_resp.pop('status_code', 200)
         return jsonify(login_resp), status_code
