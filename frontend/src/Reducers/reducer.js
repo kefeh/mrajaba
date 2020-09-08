@@ -1,5 +1,8 @@
+import client from '../services/Client'
+
 export const initialState = {
-    showRegister: false
+    showRegister: false,
+    user: {}
 }
 
 function reducer (state, action) {
@@ -10,7 +13,21 @@ function reducer (state, action) {
                 showRegister: true,
             };
         case 'HIDE_REGISTER':
-            return {state};
+            return {
+                ...state,
+                showRegister: false,
+            };
+        case 'ADD_USER':
+            client.setDataAndToken(user)
+            return {
+                ...state,
+                user: action.item
+            }
+        case 'SET_USER':
+            return {
+                ...state,
+                user: client.getUserData()
+            }
         default:
             return state;
     }
