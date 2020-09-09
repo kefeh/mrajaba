@@ -2,7 +2,8 @@ import client from '../services/Client'
 
 export const initialState = {
     showRegister: false,
-    user: {}
+    user: {},
+    active_user: ''
 }
 
 function reducer (state, action) {
@@ -27,6 +28,11 @@ function reducer (state, action) {
             return {
                 ...state,
                 user: client.getUserData()
+            }
+        case 'ADD_ACTIVE_USER':
+            return {
+                ...state,
+                active_user: action.item,
             }
         default:
             return state;
