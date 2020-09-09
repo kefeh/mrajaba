@@ -36,19 +36,25 @@
     display: flex;
     width: 40%;
     align-items: center;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     font-size: var(--fnt-normal);
 }
 
 .nav-bottom__item {
     padding: 1rem 0;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    cursor: pointer;
 }
 
 .nav-bottom__item-active {
     color: var(--accent-color);
     border-bottom: 2px solid var(--accent-color);
 }
-
+.nav-bottom__item:hover {
+    background-color: var(--transparent-blue);
+    border-bottom: 2px solid var(--transparent-blue);
+}
 .nav-bottom__inputs{
     display: flex;
     align-items: center;

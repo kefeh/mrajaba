@@ -21,6 +21,11 @@
     justify-content: flex-start;
     align-items: center;
     padding:0.8rem 0 ;
+    cursor: pointer;
+}
+
+.sidebar__list-item:hover {
+    color: var(--accent-color);
 }
 
 .sidebar__active {
