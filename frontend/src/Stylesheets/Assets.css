@@ -9,6 +9,9 @@
     background-color: var(--primary-color);
     cursor: pointer;
 }
+.btn:hover{
+    box-shadow: 0px 1px 4px var(--accent-color);
+}
 .icon {
     color: black;
     display: inline-block;
@@ -62,9 +65,13 @@
 .circular-icon-holder {
     display: inline-block;
     padding: 0.5rem;
-    background-color: var(--secondary-color);
     border-radius: 10rem;
     position: relative;
+    cursor: pointer;
+}
+
+.circular-icon-holder:hover {
+    background-color: var(--secondary-color);
 }
 
 .notifier::after{
