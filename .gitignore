@@ -1,1 +1,5 @@
 backend/venv
+__pycache__/
+**__pycache__/
+backend/icpcminesec-firebase.json
+.DS_Store
