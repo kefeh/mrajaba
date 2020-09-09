@@ -36,7 +36,6 @@ function Login() {
             password: password,
           }),
           success: (result) => {
-            console.log(result.user);
             addUser(result.user)
             setShouldRedirect(true)
             return;
