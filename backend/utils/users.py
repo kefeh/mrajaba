@@ -72,3 +72,16 @@ def login_user_util(request):
         return{'error': f"unable to signup user SEVER ERROR",
                 'status_code': 490}
 
+
+def get_all_users_util():
+    try:
+        all_users = [doc.to_dict() for doc in users.stream()]
+        return {
+            'users': all_users
+        }
+    except Exception as ex:
+        import traceback
+        traceback.print_exc()
+        print(ex)
+        return{'error': f"unable to get user SEVER ERROR",
+                'status_code': 490}
