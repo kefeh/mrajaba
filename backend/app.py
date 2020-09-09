@@ -34,19 +34,13 @@ def login_user():
     except Exception as e:
         return f"An Error Occured: {e}"
 
-@app.route('/add', methods=['POST'])
-def create():
-    """
-        create() : Add document to Firestore collection with request body.
-        Ensure you pass a custom ID as part of json body in post request,
-        e.g. json={'id': '1', 'title': 'Write a blog post'}
-    """
-    try:
-        id = request.json['id']
-        todo_ref.document(id).set(request.json)
-        return jsonify({"success": True}), 200
-    except Exception as e:
-        return f"An Error Occured: {e}"
+@app.route('/users', methods=['GET'])
+def get_users():
+    from views.user import get_all_users
+    user_data = get_all_users()
+
+    status_code = user_data.pop('status_code')
+    return jsonify(user_data), status_code
 
 @app.route('/list', methods=['GET'])
 def read():
