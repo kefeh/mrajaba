@@ -5,18 +5,31 @@ import '../Stylesheets/AddFolder.css'
 import '../Stylesheets/Auth.css'
 
 import { useStateValue } from '../Data/StateProvider'
+import { colors } from '@material-ui/core';
 
 function AddFolder() {
-    const [{active_user, active_class, active_nav}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, showAddFolder}, dispatch] = useStateValue();
 
     // creating the states
     const [folder, setFolder] = useState(null);
+    const [emptyFolder, setEmptyFolder] = useState(false);
     const [isloading, setIsloading] = useState(false);
 
+    const toggleShowAddFolder = () => {
+        dispatch({
+            type: 'HIDE_ADD_FOLDER',
+            item: false
+        })
+    }
+
     const saveFolder = () => {
-        setIsloading(true)
+        if(!folder){
+          setEmptyFolder(true)
+          return;
+        }
+        setIsloading(true) 
         $.ajax({
-          url: `/folder`, 
+          url: `/folders`,
           type: "POST",
           dataType: 'json',
           contentType: 'application/json',
@@ -28,6 +41,7 @@ function AddFolder() {
           }),
           success: (result) => {
             setIsloading(false)
+            toggleShowAddFolder()
             return;
           },
           error: (error) => {
@@ -41,22 +55,32 @@ function AddFolder() {
 
     const handleFolderChange = (event) => {
         setFolder(event.target.value)
+        setEmptyFolder(false)
     }
 
     return (
         <div className="folder">
             <form action="" className="folder__form">
                 <div className="form-item auth__form-email">
-                    <label>New Folder</label>
+                    <label>New Folder</label>{emptyFolder&& <strong style={{color:"red"}}> Folder Name is empty</strong>}
                     <input type="text" name="folder" onChange={handleFolderChange} required/>
                 </div>
                 <div className="folder__buttons">
-                    <div className='btn btn__outline'>
+                    <div onClick={toggleShowAddFolder} className='btn btn__outline'>
                         <span>Cancel</span>
                     </div>
-                    <div onClick={saveFolder} className='btn btn__primary'>
-                        <span>save</span>
-                    </div>
+                    {
+                      isloading?(
+                        <div className='btn btn__primary loading'>
+                            <span>loading...</span>
+                        </div>    
+                      ):(
+                        <div type="submit" onClick={saveFolder} className='btn btn__primary'>
+                            <span>save</span>
+                        </div> 
+                      )
+                    }
+                    
                 </div>
             </form>
         </div>
