@@ -1,0 +1,30 @@
+.folder {
+    background-color: var(--transparent-black-21);
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.folder__form {
+    width: 40rem;
+    height: 15rem;
+    background-color: var(--primary-color);
+    top: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+.folder__buttons {
+    margin-top: 2rem;
+    margin-left: 6rem;
+}
+.folder__buttons > div {
+    margin-left: 2rem;
+}
