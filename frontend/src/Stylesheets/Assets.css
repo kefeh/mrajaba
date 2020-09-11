@@ -90,3 +90,8 @@
     right: -0.6rem;
     color: var(--faded-red);
 }
+
+.loading {
+    background-color: var(--transparent-blue);
+    color: var(--accent-color);
+}
