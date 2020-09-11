@@ -2,6 +2,9 @@ import client from '../services/Client'
 
 export const initialState = {
     showRegister: false,
+    showAddFolder: false,
+    showAddFile: false,
+    fileType: '',
     user: {},
     active_user: '',
     active_class: 'Administrative',
@@ -15,10 +18,30 @@ function reducer (state, action) {
                 ...state,
                 showRegister: true,
             };
+        case 'SHOW_ADD_FOLDER':
+            return {
+                ...state,
+                showAddFolder: true,
+            };
+        case 'SHOW_ADD_FILE':
+            return {
+                ...state,
+                showAddFile: true,
+            };
         case 'HIDE_REGISTER':
             return {
                 ...state,
                 showRegister: false,
+            };
+        case 'HIDE_ADD_FOLDER':
+            return {
+                ...state,
+                showAddFolder: false,
+            };
+        case 'HIDE_ADD_FILE':
+            return {
+                ...state,
+                showAddFile: false,
             };
         case 'ADD_USER':
             client.setDataAndToken(action.item)
