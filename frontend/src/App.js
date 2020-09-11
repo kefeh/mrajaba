@@ -13,9 +13,10 @@ import {
   Switch
 } from 'react-router-dom'
 import client from './services/Client';
+import AddFolder from './Components/AddFolder';
 
 function App() {
-  const [{showRegister, user}] = useStateValue();
+  const [{showRegister, showAddFolder, user}] = useStateValue();
   return (
     <div className="App">
       <Router>
@@ -26,7 +27,10 @@ function App() {
                  typeof(showRegister) === 'undefined' || showRegister === false ?  
             ( <>
               <News />
-              <MainContent /> 
+              <MainContent />
+              {
+                (typeof(showAddFolder) !== 'undefined' && showAddFolder === true) && <AddFolder />
+              }
             </> ):
             <Register/>
                 ) : (
