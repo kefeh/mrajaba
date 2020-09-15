@@ -2,6 +2,10 @@ import pyrebase
 from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
 
+
+import os
+BASE_PATH = os.path.abspath(os.path.dirname(__file__))
+
 firebaseConfig = {
   "apiKey" : "AIzaSyDBaZcWVpZdRBiqIPfn6-PAMbqEwjy0K_c",
   "authDomain" : "icpcminesec.firebaseapp.com",
