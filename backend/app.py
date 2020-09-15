@@ -50,19 +50,27 @@ def add_folder():
     status_code = folder_resp.pop('status_code')
     return jsonify(folder_resp), status_code
 
-@app.route('/update', methods=['POST', 'PUT'])
+@app.route('/upload', methods=['POST', 'PUT'])
 def update():
-    """
-        update() : Update document in Firestore collection with request body.
-        Ensure you pass a custom ID as part of json body in post request,
-        e.g. json={'id': '1', 'title': 'Write a blog post today'}
-    """
+    from views.files import add_file
     try:
-        id = request.json['id']
-        todo_ref.document(id).update(request.json)
-        return jsonify({"success": True}), 200
-    except Exception as e:
-        return f"An Error Occured: {e}"
+        files_resp = add_file(request)
+        status_code = files_resp.pop('status_code')
+        return jsonify(files_resp), status_code
+    except Exception:
+        import traceback
+        traceback.print_exc()
+
+    return jsonify({"success": True}), 200
+
+@app.route('/files', methods=['GET'])
+def get_files():
+    from views.files import get_files_view
+    file_data = get_files_view(request)
+
+    status_code = file_data.pop('status_code')
+    return jsonify(file_data), status_code
+
 
 @app.route('/delete', methods=['GET', 'DELETE'])
 def delete():
