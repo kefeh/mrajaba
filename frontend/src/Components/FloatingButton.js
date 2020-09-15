@@ -13,13 +13,20 @@ function FloatingButton() {
         })
     }
 
+    const toggleShowAddFile = () => {
+        dispatch({
+            type: 'SHOW_ADD_FILE',
+            item: true
+        })
+    }
+
     return (
         <div className="floating-action" >
             <div className="floating-action__side" >
                 <div onClick={toggleShowAddFolder} className='btn btn__outline'>
                     <span>Folder</span>
                 </div>
-                <div className='btn btn__outline'>
+                <div onClick={toggleShowAddFile} className='btn btn__outline'>
                     <span>File</span>
                 </div>
             </div>
