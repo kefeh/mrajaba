@@ -14,9 +14,10 @@ import {
 } from 'react-router-dom'
 import client from './services/Client';
 import AddFolder from './Components/AddFolder';
+import AddFile from './Components/AddFile';
 
 function App() {
-  const [{showRegister, showAddFolder, user}] = useStateValue();
+  const [{showRegister, showAddFolder, showAddFile, user}] = useStateValue();
   return (
     <div className="App">
       <Router>
@@ -30,6 +31,9 @@ function App() {
               <MainContent />
               {
                 (typeof(showAddFolder) !== 'undefined' && showAddFolder === true) && <AddFolder />
+              }
+              {
+                (typeof(showAddFile) !== 'undefined' && showAddFile === true) && <AddFile/>
               }
             </> ):
             <Register/>
