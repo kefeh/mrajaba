@@ -65,11 +65,21 @@ def update():
 
 @app.route('/files', methods=['GET'])
 def get_files():
+    print("started")
     from views.files import get_files_view
     file_data = get_files_view(request)
 
     status_code = file_data.pop('status_code')
     return jsonify(file_data), status_code
+
+
+@app.route('/folders', methods=['GET'])
+def get_folders():
+    from views.folder import get_folders_view
+    folder_data = get_folders_view(request)
+
+    status_code = folder_data.pop('status_code')
+    return jsonify(folder_data), status_code
 
 
 @app.route('/delete', methods=['GET', 'DELETE'])
