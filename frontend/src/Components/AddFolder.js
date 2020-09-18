@@ -59,13 +59,13 @@ function AddFolder() {
     }
 
     return (
-        <div className="folder">
-            <form action="" className="folder__form">
+        <div className="addFolder">
+            <form action="" className="addFolder__form">
                 <div className="form-item auth__form-email">
                     <label>New Folder</label>{emptyFolder&& <strong style={{color:"red"}}> Folder Name is empty</strong>}
                     <input type="text" name="folder" onChange={handleFolderChange} required/>
                 </div>
-                <div className="folder__buttons">
+                <div className="addFolder__buttons">
                     <div onClick={toggleShowAddFolder} className='btn btn__outline'>
                         <span>Cancel</span>
                     </div>

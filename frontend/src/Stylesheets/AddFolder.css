@@ -1,4 +1,4 @@
-.folder {
+.addFolder {
     background-color: var(--transparent-black-21);
     height: 100vh;
     width: 100%;
@@ -9,7 +9,7 @@
     justify-content: center;
 }
 
-.folder__form {
+.addFolder__form {
     width: 40rem;
     height: 15rem;
     background-color: var(--primary-color);
@@ -21,10 +21,10 @@
     border-radius: 1rem;
 }
 
-.folder__buttons {
+.addFolder__buttons {
     margin-top: 2rem;
     margin-left: 6rem;
 }
-.folder__buttons > div {
+.addFolder__buttons > div {
     margin-left: 2rem;
 }
