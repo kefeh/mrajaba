@@ -4,7 +4,7 @@ import '../Stylesheets/File.css'
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
-function File() {
+function File({file}) {
     return (
         <div className="file">
             <div className="file__delete-buttone">
@@ -18,7 +18,7 @@ function File() {
                 </div>
             </div>
             <div className="file__title">
-            The gem might not be able to compile, to solve this you might need to
+            {file.name}
             </div>
         </div>
     )
