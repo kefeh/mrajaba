@@ -13,6 +13,8 @@
 }
 html {
   background-color: var(--secondary-color);
+  max-height: 100vh;
+  /* overflow-y: hidden; */
 }
 body {
   margin: 0;
