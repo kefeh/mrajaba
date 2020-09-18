@@ -30,11 +30,12 @@ def add_file_util(request):
                 'status_code': 400}
 
 def get_files_util(request):
-    user = request['user']
-    clas = request['class']
-    category = request['category']
-    folder = request['folder']
     try:
+        user = request.args.get('user')
+        clas = request.args.get('class')
+        category = request.args.get('category')
+        folder = request.args.get('folder')
+        print("starting")
         file_list = files.where(
             'user', '==', user).where('class', '==', clas).where(
                 'category', '==', category).where(
