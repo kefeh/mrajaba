@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback }  from 'react'
 import '../Stylesheets/ContentBody.css';
 import '../Stylesheets/Assets.css';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
@@ -6,9 +6,74 @@ import PeopleIcon from '@material-ui/icons/People';
 import Search from './Search';
 import ContentSection from './ContentSection';
 import { useStateValue } from '../Data/StateProvider';
+import $ from 'jquery';
+
 
 function ContentBody() {
-    const [{active_user, user, active_class, active_nav}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, folder, showAddFile}, dispatch] = useStateValue();
+    
+    const [documents, setDocuments] = useState([]);
+    const [files, setFiles] = useState([]);
+    const [fetchingInProgress, setFetchingInProgress] = useState(false);
+
+    useEffect(() => {
+        getFiles()
+    }, [active_user, active_class, active_nav, folder])
+
+    useEffect(() => {
+        getFolders()
+    }, [active_user, active_class, active_nav])
+
+    const getFiles = () => {
+        $.ajax({
+            url: `/files?class=${active_class}&category=${active_nav}&folder=${folder}&user=${active_user}`, //TODO: update request URL
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            success: (result) => {
+              console.log(result.files)
+              setFiles(result.files);
+              setFetchingInProgress(true);
+              return;
+            },
+            error: (error) => {
+              // console.log(error)
+              // alert(error.responseJSON.message)
+              setFetchingInProgress(false)
+              return;
+            }
+        })
+    }
+
+    const getFolders = () => {
+        $.ajax({
+            url: `/folders?class=${active_class}&category=${active_nav}&user=${active_user}`, //TODO: update request URL
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                'user': active_user,
+                'class': active_class,
+                'category': active_nav,
+            }),
+            xhrFields: {
+              withCredentials: true
+            },
+            crossDomain: true,
+            success: (result) => {
+              console.log(result.foldrs)
+              setDocuments(result.folders);
+              setFetchingInProgress(true);
+              return;
+            },
+            error: (error) => {
+              // console.log(error)
+              // alert(error.responseJSON.message)
+              setFetchingInProgress(false)
+              return;
+            }
+        })
+    }
 
     const activeClass = (class_name) => {
         dispatch({
@@ -23,6 +88,16 @@ function ContentBody() {
             item: class_name,
         })
     }
+
+    // useCallback(
+    //     getFiles,
+    //     [active_user, active_class, active_nav, folder],
+    // )
+
+    // useCallback(
+    //     getFolders,
+    //     [active_user, active_class, active_nav],
+    // )
 
     return (
         <div className="content-body">
@@ -58,7 +133,7 @@ function ContentBody() {
                     </div>
                 </div>
             </div>
-            <ContentSection />
+            <ContentSection folders={documents} files={files} />
         </div>
     )
 }
