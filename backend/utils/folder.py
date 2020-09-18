@@ -24,9 +24,11 @@ def add_folder_util(request):
                 'status_code': 400}
 
 def get_folders_util(request):
-    user = request['user']
-    clas = request['class']
-    category = request['category']
+    user = request.args.get('user')
+    clas = request.args.get('class')
+    category = request.args.get('category')
+    print(category)
+    print(clas)
     try:
         file_list = folders.where(
             'user', '==', user).where('class', '==', clas).where(
