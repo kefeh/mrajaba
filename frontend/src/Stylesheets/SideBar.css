@@ -39,5 +39,6 @@
 }
 
 .sidebar__btn {
+    margin-top: auto;
     justify-self: end;
 }
