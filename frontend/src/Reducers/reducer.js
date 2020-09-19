@@ -9,6 +9,7 @@ export const initialState = {
     active_user: '',
     active_class: 'Administrative',
     active_nav: 'Recently',
+    folder: '',
 }
 
 function reducer (state, action) {
@@ -68,6 +69,12 @@ function reducer (state, action) {
             return {
                 ...state,
                 active_nav: action.item,
+                folder: '',
+            }
+        case 'ADD_ACTIVE_FOLDER':
+            return {
+                ...state,
+                folder: action.item,
             }
         default:
             return state;
