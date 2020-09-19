@@ -10,7 +10,7 @@ import $ from 'jquery';
 
 
 function ContentBody() {
-    const [{active_user, active_class, active_nav, folder, showAddFile}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, folder, showAddFile, showAddFolder}, dispatch] = useStateValue();
     
     const [documents, setDocuments] = useState([]);
     const [files, setFiles] = useState([]);
@@ -18,13 +18,14 @@ function ContentBody() {
 
     useEffect(() => {
         getFiles()
-    }, [active_user, active_class, active_nav, folder])
+    }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder])
 
     useEffect(() => {
         getFolders()
-    }, [active_user, active_class, active_nav])
+    }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder])
 
     const getFiles = () => {
+        setFetchingInProgress(true);
         $.ajax({
             url: `/files?class=${active_class}&category=${active_nav}&folder=${folder}&user=${active_user}`, //TODO: update request URL
             type: "GET",
@@ -33,7 +34,7 @@ function ContentBody() {
             success: (result) => {
               console.log(result.files)
               setFiles(result.files);
-              setFetchingInProgress(true);
+              setFetchingInProgress(false);
               return;
             },
             error: (error) => {
@@ -46,16 +47,16 @@ function ContentBody() {
     }
 
     const getFolders = () => {
+        setFetchingInProgress(true);
+        if(folder){
+            setDocuments([]);
+            return
+        }
         $.ajax({
             url: `/folders?class=${active_class}&category=${active_nav}&user=${active_user}`, //TODO: update request URL
             type: "GET",
             dataType: 'json',
             contentType: 'application/json',
-            data: JSON.stringify({
-                'user': active_user,
-                'class': active_class,
-                'category': active_nav,
-            }),
             xhrFields: {
               withCredentials: true
             },
@@ -63,7 +64,7 @@ function ContentBody() {
             success: (result) => {
               console.log(result.foldrs)
               setDocuments(result.folders);
-              setFetchingInProgress(true);
+              setFetchingInProgress(false);
               return;
             },
             error: (error) => {
@@ -133,7 +134,16 @@ function ContentBody() {
                     </div>
                 </div>
             </div>
-            <ContentSection folders={documents} files={files} />
+            {fetchingInProgress?(
+                <div className="loader__holder">
+                    <div className="loader__container">
+                        <div className="loader">
+                    </div>
+                </div>
+            </div>
+            ):(
+                <ContentSection folders={documents} files={files} getFiles={getFiles} getFolders={getFolders} />
+            )}
         </div>
     )
 }
