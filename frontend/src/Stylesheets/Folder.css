@@ -5,6 +5,7 @@
     justify-content: space-between;
     width: 14rem;
     margin-bottom: 2rem;
+    cursor: pointer;
 }
 .folder__content > img {
     width: 6rem;
