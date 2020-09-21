@@ -1,6 +1,6 @@
 from getpass import getpass
 from datetime import datetime
-from models import folders
+from models import folders, files
 
 
 def add_folder_util(request):
@@ -43,4 +43,30 @@ def get_folders_util(request):
         traceback.print_exc()
         print(ex)
         return{'error': f"unable to get folders SEVER ERROR",
+                'status_code': 490}
+
+def delete_folder(request):
+    try:
+        folder_id = request.args.get('id')
+        folder_name = request.args.get('name')
+        folder_user = request.args.get('user')
+        folder_class = request.args.get('class')
+        folder_category = request.args.get('category')
+        file_list = files.where(
+                'user', '==', folder_user).where('class', '==', folder_class).where(
+                    'category', '==', folder_category).where(
+                        'folder', '==', folder_name).get()
+        for doc in file_list:
+            print(f'Deleting doc {doc.id} => {doc.to_dict()}')
+            doc.reference.delete()
+        the_folder = folders.document(folder_id)
+        the_folder.delete()
+        return {
+            'id': folder_id
+        }
+    except Exception as ex:
+        import traceback
+        traceback.print_exc()
+        print(ex)
+        return{'error': f"unable to delete folder SEVER ERROR",
                 'status_code': 490}
