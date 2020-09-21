@@ -1,4 +1,4 @@
-.loader__container {
+.loader__container, .simple-loader__container {
     width: 6rem;
     height: 6rem;
     background-color: #0d062844;
@@ -10,7 +10,7 @@
     top: 40%;
     left: 50%;
 }
-.loader {
+.loader, .simple-loader {
     transform: translate(0%, 0%);
     width: 3rem;
     height: 3rem;
@@ -43,4 +43,37 @@
     display: flex;
     margin-left: auto;
     margin-right: auto;
+}
+
+
+.addFile_loader{
+    transform: translate(0%, 0%);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 5px solid #140D4F;
+    border-top: 5px solid var(--accent-color);
+    animation: animate 1s infinite linear;
+}
+
+@keyframes animate {
+    0% {
+        transform: translate(0%, 0%) rotate(0deg);
+    }
+    100% {
+        transform: translate(0%, 0%) rotate(360deg);
+    }
+}
+
+.addFileloader__container {
+    width: 6rem;
+    height: 6rem;
+    background-color: #0d062844;
+    margin: auto ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 40%;
+    left: 50%;
 }
