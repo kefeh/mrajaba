@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__) 
 
 # Initialize Firestore DB
 
@@ -80,6 +80,24 @@ def get_folders():
 
     status_code = folder_data.pop('status_code')
     return jsonify(folder_data), status_code
+
+
+@app.route('/folders', methods=['DELETE'])
+def delete_folder():
+    from views.folder import delete_folder_view
+    folder_data = delete_folder_view(request)
+
+    status_code = folder_data.pop('status_code')
+    return jsonify(folder_data), status_code
+
+
+@app.route('/files', methods=['DELETE'])
+def delete_file():
+    from views.files import delete_file_view
+    file_data = delete_file_view(request)
+
+    status_code = file_data.pop('status_code')
+    return jsonify(file_data), status_code
 
 
 @app.route('/delete', methods=['GET', 'DELETE'])
