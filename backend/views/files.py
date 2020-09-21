@@ -1,7 +1,8 @@
-from utils.files import add_file_util, get_files_util
+from utils.files import add_file_util, get_files_util, delete_file
 from werkzeug.utils import secure_filename
 from utils.drive_init import get_files
 from config import BASE_PATH
+import os
 
 
 def add_file(request):
@@ -10,11 +11,11 @@ def add_file(request):
     # data = data.get('info')
     filename = secure_filename(file.filename)
     data['filename'] = filename
-    add_file_resp = add_file_util(data)
     destination = "/".join([BASE_PATH, filename])
     file.save(destination)
-    get_files()
-
+    add_file_resp = add_file_util(data, destination)
+    # get_files()
+    os.remove(destination)
     if "error" in add_file_resp:
         add_file_resp['success'] = False
     else:
@@ -31,3 +32,12 @@ def get_files_view(request):
         files_data['success'] = True
         files_data['status_code'] = 200
     return files_data
+
+def delete_file_view(request):
+    result = delete_file(request)
+    if "error" in result:
+        result['success'] = False
+    else:
+        result['success'] = True
+        result['status_code'] = 200
+    return result
