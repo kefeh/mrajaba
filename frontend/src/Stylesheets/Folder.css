@@ -5,7 +5,23 @@
     justify-content: space-between;
     width: 14rem;
     margin-bottom: 2rem;
+    position: relative;
     cursor: pointer;
+}
+.folder:hover 
+.folder__delete-buttone{
+display: inline-block;
+}
+.folder__delete-buttone {
+display: none;
+position: absolute;
+top: -1rem;
+right: 0rem;
+padding: 0.1rem 0.2rem;
+background-color: var(--primary-color);
+border-radius: 100rem;
+border: 2px solid var(--faded-red);
+color: var(--faded-red);
 }
 .folder__content > img {
     width: 6rem;
