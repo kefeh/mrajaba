@@ -3,6 +3,7 @@ import $ from 'jquery';
 import '../Stylesheets/Assets.css'
 import '../Stylesheets/AddFile.css'
 import '../Stylesheets/Auth.css'
+import '../Stylesheets/Loader.css'
 
 import { useStateValue } from '../Data/StateProvider'
 import { colors } from '@material-ui/core';
@@ -41,12 +42,6 @@ function AddFile() {
 
     const upload = (event) => {
         var data = new FormData();
-        var metadata = {
-            'user': active_user,
-            'class': active_class,
-            'category': active_nav,
-            'folder': folder,
-        }
         setShowProgress(true)
         data.append('file', selectedFile[0]);
         data.append('user', active_user);
@@ -85,6 +80,12 @@ function AddFile() {
                 // toggleShowAddFolder()
                 return;
               },
+              error: (error) => {
+                console.log(error)
+                alert(error.responseJSON.error)
+                toggleHideAddFile();
+                return;
+              }
         })
     }
 
@@ -92,10 +93,12 @@ function AddFile() {
         <div className="addFile">
             
             <form action="" className="addFile__form">
-                {showProgress &&<div className="addFile__progress" data-progress={progress}>
-                    <span className="addFile__progress-loaded" style={{width: progress + "%" }}>{progress}</span>
-                </div>}
-                <div className="form-item auth__form-email">
+                {showProgress ? (<div className="">
+                    <div className="addFileloader__containers">
+                        <div className="addFile_loader">
+                    </div>
+                </div>
+            </div>):(<><div className="form-item auth__form-email">
                     <input type="file" name="file" id="addFile" class="file__inputfile" onChange={selectFile} accept={acceptType}/>
                     {/* <label for="file">Choose a file</label> */}
                 </div>
@@ -110,9 +113,8 @@ function AddFile() {
                         <div onClick={upload} type="submit"  className='btn btn__primary'>
                             <span>save</span>
                         </div> 
-                     
-                    
-                </div>
+                </div> </>)}
+                
             </form>
         </div>
     )
