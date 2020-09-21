@@ -10,7 +10,7 @@ import $ from 'jquery';
 
 
 function ContentBody() {
-    const [{active_user, active_class, active_nav, folder, showAddFile, showAddFolder}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh}, dispatch] = useStateValue();
     
     const [documents, setDocuments] = useState([]);
     const [files, setFiles] = useState([]);
@@ -18,11 +18,11 @@ function ContentBody() {
 
     useEffect(() => {
         getFiles()
-    }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder])
+    }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh])
 
     useEffect(() => {
         getFolders()
-    }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder])
+    }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh])
 
     const getFiles = () => {
         setFetchingInProgress(true);
@@ -48,7 +48,7 @@ function ContentBody() {
 
     const getFolders = () => {
         setFetchingInProgress(true);
-        if(folder){
+        if(folder || active_nav === 'Recently'){
             setDocuments([]);
             return
         }
