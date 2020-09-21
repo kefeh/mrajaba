@@ -3,11 +3,14 @@ import pickle
 from config import BASE_PATH
 import os.path
 from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
+from googleapiclient.errors import HttpError
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import requests
 
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly', 'https://www.googleapis.com/auth/drive']
+SCOPES = ['https://www.googleapis.com/auth/drive']
 
 """Shows basic usage of the Drive v3 API.
 Prints the names and ids of the first 10 files the user has access to.
@@ -46,14 +49,42 @@ def get_files():
         for item in items:
             print(u'{0} ({1})'.format(item['name'], item['id']))
 
-# def create_file(file_name, file_path, file_type):
-#     file_metadata = {
-#         'name': file_name,
-#     }
-#     media = MediaFileUpload('files/report.csv',
-#                             mimetype='text/csv',
-#                             resumable=True)
-#     file = drive_service.files().create(body=file_metadata,
-#                                         media_body=media,
-#                                         fields='id').execute()
-#     print 'File ID: %s' % file.get('id')
+def create_file(file_name, file_path, file_type):
+    
+        file_metadata = {
+            'name': file_name,
+        }
+        media = MediaFileUpload(file_path,
+                                mimetype=file_type,
+                                resumable=True)
+        request = service.files().create(body=file_metadata,
+                                            media_body=media,
+                                            fields='id')
+        response = None
+        while response is None:
+            try:
+                status, response = request.next_chunk()
+                if status:
+                    print(f"Uploaded {int(status.progress() * 100)}.")
+                print("Upload Complete!")
+                print(f"File ID: {response.get('id')}")
+                service.permissions().create(fileId=response.get('id'), body={'role':'reader', 'type': 'anyone'}).execute()
+                return response.get('id'), 200
+            except HttpError as e:
+                import traceback
+                traceback.print_exc()
+                if e.resp.status in [404]:
+                    print("failed to Upload click restart")
+                    return "failed to Upload click restart", 404
+                elif e.resp.status in [500, 502, 503, 504]:
+                    status, response = request.next_chunk()
+                    return response.get('id'), 200
+                else:
+                    return "Failed to upload", 400
+
+def delete_file(fileId):
+    try:
+        results = service.files().delete(fileId=fileId).execute()
+        return True
+    except Exception as e:
+        return False
