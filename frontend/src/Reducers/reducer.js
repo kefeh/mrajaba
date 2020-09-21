@@ -10,6 +10,8 @@ export const initialState = {
     active_class: 'Administrative',
     active_nav: 'Recently',
     folder: '',
+    refresh: true,
+    search_term: '',
 }
 
 function reducer (state, action) {
@@ -75,6 +77,16 @@ function reducer (state, action) {
             return {
                 ...state,
                 folder: action.item,
+            }
+        case 'SET_REFRESH':
+            return {
+                ...state,
+                refresh: action.item,
+            }
+        case 'SET_SEARCHTERM':
+            return {
+                ...state,
+                search_term: action.item,
             }
         default:
             return state;
