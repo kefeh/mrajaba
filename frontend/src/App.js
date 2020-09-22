@@ -17,7 +17,7 @@ import AddFolder from './Components/AddFolder';
 import AddFile from './Components/AddFile';
 
 function App() {
-  const [{showRegister, showAddFolder, showAddFile, user}] = useStateValue();
+  const [{showRegister, showAddFolder, showAddFile}] = useStateValue();
   return (
     <div className="App">
       <Router>
