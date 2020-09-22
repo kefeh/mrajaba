@@ -37,7 +37,7 @@ def login_user():
 @app.route('/users', methods=['GET'])
 def get_users():
     from views.user import get_all_users
-    user_data = get_all_users()
+    user_data = get_all_users(request)
 
     status_code = user_data.pop('status_code')
     return jsonify(user_data), status_code
@@ -99,6 +99,15 @@ def delete_file():
     status_code = file_data.pop('status_code')
     return jsonify(file_data), status_code
 
+
+@app.route('/status', methods=['GET'])
+def get_login_status():
+    auth_header = request.headers.get('Authorization')
+    from utils.users import verify_token
+    status_code, value = verify_token(auth_header)
+    if status_code == 200:
+        return jsonify({"user": value}), status_code
+    return jsonify({"message": value}), status_code
 
 @app.route('/delete', methods=['GET', 'DELETE'])
 def delete():
