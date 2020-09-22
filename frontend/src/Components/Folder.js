@@ -4,6 +4,8 @@ import { useStateValue } from '../Data/StateProvider';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import $ from 'jquery';
 
+import client from '../services/Client'
+
 function Folder({a_folder}) {
 
     const [{active_user, active_class, active_nav, refresh, folder, showAddFile}, dispatch] = useStateValue();
@@ -27,7 +29,7 @@ function Folder({a_folder}) {
     const deleteFolder = (id) => {
         setFetchingInProgress(true);
         $.ajax({
-            url: `/folders?id=${id}&class=${active_class}&category=${active_nav}&user=${active_user}`, //TODO: update request URL
+            url: `/folders?id=${id}&class=${active_class}&category=${active_nav}&shared_to=${active_user}&user=${client.getUserData()}`, //TODO: update request URL
             type: "DELETE",
             dataType: 'json',
             contentType: 'application/json',
