@@ -5,6 +5,8 @@ import AddIcon from '@material-ui/icons/Add';
 import GroupIcon from '@material-ui/icons/Group';
 import { useStateValue } from '../Data/StateProvider';
 
+import client from '../services/Client'
+
 function SideBar() {
     const [{active_user, user}, dispatch] = useStateValue();
 
@@ -16,11 +18,10 @@ function SideBar() {
     
     const getUsers = () => {
         $.ajax({
-            url: '/users', //TODO: update request URL
+            url: `/users?user=${client.getUserData()}`, //TODO: update request URL
             type: "GET",
             dataType: 'json',
             contentType: 'application/json',
-            data: JSON.stringify({}),
             xhrFields: {
               withCredentials: true
             },
@@ -36,9 +37,9 @@ function SideBar() {
             error: (error) => {
               // console.log(error)
               // alert(error.responseJSON.message)
-              this.setState({
-                fetchingInProgress: false,
-              })
+            //   this.setState({
+            //     fetchingInProgress: false,
+            //   })
               return;
             }
           })
