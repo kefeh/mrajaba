@@ -8,6 +8,8 @@ import ContentSection from './ContentSection';
 import { useStateValue } from '../Data/StateProvider';
 import $ from 'jquery';
 
+import client from '../services/Client'
+
 
 function ContentBody() {
     const [{active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh}, dispatch] = useStateValue();
@@ -27,7 +29,7 @@ function ContentBody() {
     const getFiles = () => {
         setFetchingInProgress(true);
         $.ajax({
-            url: `/files?class=${active_class}&category=${active_nav}&folder=${folder}&user=${active_user}`, //TODO: update request URL
+            url: `/files?class=${active_class}&category=${active_nav}&folder=${folder}&shared_to=${active_user}&user=${client.getUserData()}`, //TODO: update request URL
             type: "GET",
             dataType: 'json',
             contentType: 'application/json',
@@ -53,7 +55,7 @@ function ContentBody() {
             return
         }
         $.ajax({
-            url: `/folders?class=${active_class}&category=${active_nav}&user=${active_user}`, //TODO: update request URL
+            url: `/folders?class=${active_class}&category=${active_nav}&shared_to=${active_user}&user=${client.getUserData()}`, //TODO: update request URL
             type: "GET",
             dataType: 'json',
             contentType: 'application/json',
