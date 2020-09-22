@@ -19,8 +19,9 @@ def login_user(request):
         login_resp['status_code'] = 200
     return login_resp
 
-def get_all_users():
-    users_data = get_all_users_util()
+def get_all_users(request):
+    print('just started')
+    users_data = get_all_users_util(request)
     if "error" in users_data:
         users_data['success'] = False
     else:
