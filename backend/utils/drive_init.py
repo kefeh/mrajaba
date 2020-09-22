@@ -66,10 +66,6 @@ def create_file(file_name, file_path, file_type):
                 status, response = request.next_chunk()
                 if status:
                     print(f"Uploaded {int(status.progress() * 100)}.")
-                print("Upload Complete!")
-                print(f"File ID: {response.get('id')}")
-                service.permissions().create(fileId=response.get('id'), body={'role':'reader', 'type': 'anyone'}).execute()
-                return response.get('id'), 200
             except HttpError as e:
                 import traceback
                 traceback.print_exc()
@@ -81,6 +77,10 @@ def create_file(file_name, file_path, file_type):
                     return response.get('id'), 200
                 else:
                     return "Failed to upload", 400
+        print("Upload Complete!")
+        print(f"File ID: {response.get('id')}")
+        service.permissions().create(fileId=response.get('id'), body={'role':'reader', 'type': 'anyone'}).execute()
+        return response.get('id'), 200
 
 def delete_file(fileId):
     try:
