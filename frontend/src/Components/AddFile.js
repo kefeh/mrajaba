@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import $ from 'jquery';
 import '../Stylesheets/Assets.css'
 import '../Stylesheets/AddFile.css'
 import '../Stylesheets/Auth.css'
 import '../Stylesheets/Loader.css'
 
+import client from '../services/Client'
+
+
 import { useStateValue } from '../Data/StateProvider'
-import { colors } from '@material-ui/core';
 
 function AddFile() {
     const document = ".pdf,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     const images = "image/*"
     const videos = "video/*"
-    const [{active_user, active_class, active_nav, folder, showAddFile}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, folder, user, showAddFile}, dispatch] = useStateValue();
     
     var acceptType = ''
     if(active_nav === 'Documents'){
@@ -44,7 +46,8 @@ function AddFile() {
         var data = new FormData();
         setShowProgress(true)
         data.append('file', selectedFile[0]);
-        data.append('user', active_user);
+        data.append('user', client.getUserData());
+        data.append('shared_to', active_user);
         data.append('class', active_class);
         data.append('category', active_nav);
         data.append('folder', folder);
