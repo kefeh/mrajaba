@@ -1,6 +1,5 @@
 import $ from 'jquery';
 
-
 class Client {
 
     LOCAL_STORAGE_KEY = "token_key";
@@ -8,8 +7,7 @@ class Client {
 
     setDataAndToken = (user) => {
         localStorage.setItem(this.LOCAL_STORAGE_KEY, user.token);
-        localStorage.setItem(this.LOCAL_STORAGE_LOGIN_DATA, user)
-
+        localStorage.setItem(this.LOCAL_STORAGE_LOGIN_DATA, user.email)
     }
 
     removeToken = () => {
@@ -58,7 +56,7 @@ class Client {
                 type: "GET",
                 dataType: 'json',
                 headers: {
-                    'Authorization': `Bearer ${
+                    'Authorization': `${
                         localStorage.getItem(this.LOCAL_STORAGE_KEY)}`,
                 },
                 contentType: 'application/json',
@@ -69,13 +67,13 @@ class Client {
                 success: (result) => {
                   // console.log(result.data.user_id)
                   localStorage.setItem(
-                      this.LOCAL_STORAGE_LOGIN_DATA, result.data.user_id);
-                  return result;
+                      this.LOCAL_STORAGE_LOGIN_DATA, result.user);
+                  return true;
                 },
                 error: (error) => {
                   localStorage.removeItem(this.LOCAL_STORAGE_LOGIN_DATA)
-                  alert(error.responseJSON.message)
-                  return error;
+                // alert(error.responseJSON.message)
+                  return false;
                 }
             });
 
@@ -83,10 +81,11 @@ class Client {
     }
 
     isLoggedIn = () => {
+        console.log(this.getUserData())
+        var boolean = this.getStatus()
     //   this.getStatus()
       // console.log(localStorage.getItem(this.LOCAL_STORAGE_LOGIN_DATA))
-      return localStorage.getItem(
-          this.LOCAL_STORAGE_LOGIN_DATA)?true:false;
+      return this.getUserData()?true:false
     }
 }
 
