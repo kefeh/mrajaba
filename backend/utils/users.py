@@ -3,6 +3,7 @@ from getpass import getpass
 from datetime import datetime
 from config import auth
 from models import users
+from firebase_admin import auth as f_auth
 
 from requests.exceptions import HTTPError
 
@@ -10,6 +11,7 @@ def signup_user_util(request):
     email = request.json['email']
     password = request.json['password']
     name = request.json['name']
+    admin = request.json['admin']
     created_at = datetime.now().strftime('%Y-%m-%d %H:%M')
 
     # create new authenticated user
@@ -19,16 +21,19 @@ def signup_user_util(request):
         user_id = str(datetime.timestamp(datetime.now()))
         jwt = user['idToken']
         users.document(user_id).set({
+            "id": user_id,
             "name": name,
             "email": email,
-            "created_at": created_at
+            "created_at": created_at,
+            "admin": bool(admin),
         })
         return {
             "user": {
                 "id": user_id,
                 "name": name,
                 "email": email,
-                "token": jwt
+                "token": jwt,
+                "admin": bool(admin),
             }
         }
     except HTTPError as e:
@@ -53,7 +58,7 @@ def login_user_util(request):
         user_info = users.where('email', '==', email).limit(1).get()[0].to_dict()
         
         jwt = user['idToken']
-        print(user_info)
+        print(user)
         user_info = {**user_info, "token": jwt}
 
         return {
@@ -73,15 +78,33 @@ def login_user_util(request):
                 'status_code': 490}
 
 
-def get_all_users_util():
+def get_all_users_util(request):
     try:
-        all_users = [doc.to_dict() for doc in users.stream()]
+        c_user = request.args.get('user')
+        user_info = users.where('email', '==', c_user).limit(1).get()[0].to_dict()
+        
+        if user_info['admin']:
+            all_users = [doc.to_dict() for doc in users.stream()]
+        else:
+            all_users = [doc.to_dict() for doc in users.where('admin', '==', True).get()]
+            all_users.append(user_info)
         return {
-            'users': all_users
-        }
+                'users': all_users
+            }
     except Exception as ex:
         import traceback
         traceback.print_exc()
         print(ex)
         return{'error': f"unable to get user SEVER ERROR",
                 'status_code': 490}
+
+
+def verify_token(id_token):
+    print(id_token)
+    if not id_token:
+        return 404, "No tokens provided."
+    try:
+        user = f_auth.verify_id_token(id_token)
+        return 200, user['email']
+    except:
+        return 400, 'Invalid token provided.'
