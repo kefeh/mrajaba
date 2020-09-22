@@ -5,7 +5,7 @@ import '../Stylesheets/AddFolder.css'
 import '../Stylesheets/Auth.css'
 
 import { useStateValue } from '../Data/StateProvider'
-import { colors } from '@material-ui/core';
+import client from '../services/Client'
 
 function AddFolder() {
     const [{active_user, active_class, active_nav, showAddFolder}, dispatch] = useStateValue();
@@ -34,7 +34,8 @@ function AddFolder() {
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify({
-            user: active_user,
+            shared_to: active_user,
+            user: client.getUserData(),
             class: active_class,
             category: active_nav,
             folder: folder,
