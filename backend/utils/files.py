@@ -15,6 +15,7 @@ def add_file_util(request, file_path):
     from pprint import pprint
     # pprint(request[0])
     user = request['user'][0]
+    shared_to = request['shared_to'][0]
     clas = request['class'][0]
     category = request['category'][0]
     folder = request['folder'][0]
@@ -26,6 +27,7 @@ def add_file_util(request, file_path):
     try:
         files.document(file_id).set({
             "user": user,
+            "shared_to": shared_to,
             "class": clas,
             "category": category,
             "name": name,
@@ -46,18 +48,19 @@ def add_file_util(request, file_path):
 def get_files_util(request):
     try:
         user = request.args.get('user')
+        shared_to = request.args.get('shared_to')
         clas = request.args.get('class')
         category = request.args.get('category')
         folder = request.args.get('folder')
         if category == 'Recently':
-            file_list = files.where(
-                'user', '==', user).where('class', '==', clas).order_by(
+            file_list = files.where('user', '==', user).where(
+                'shared_to', '==', shared_to).where('class', '==', clas).order_by(
                     'created_at').get()
         else:
-            file_list = files.where(
-                'user', '==', user).where('class', '==', clas).where(
-                    'category', '==', category).where(
-                        'folder', '==', folder).order_by('created_at').get()
+            file_list = files.where('user', '==', user).where(
+                'shared_to', '==', shared_to).where('class', '==', clas).where(
+                    'category', '==', category).where('folder', '==', folder).order_by(
+                        'created_at').get()
 
         new_file_list = [a_file.to_dict() for a_file in file_list]
         return {
