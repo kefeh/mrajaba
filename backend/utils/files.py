@@ -1,6 +1,6 @@
 from getpass import getpass
 from datetime import datetime
-from models import files
+from models import files, notifications, users
 from .drive_init import create_file, delete_file
 
 FILE_MIME_TYPE = {
@@ -37,6 +37,16 @@ def add_file_util(request, file_path):
             "id": file_id,
             "doc_id": response,
         })
+
+        notifications.document(file_id).set({
+            "user": shared_to,
+            "created_at": datetime.now().strftime('%Y-%m-%d %H:%M'),
+            "message": f"{user} shared a new file with you: {name}",
+        })
+
+        user_info = users.where('email', '==', shared_to).limit(1).get()[0].to_dict()
+        a_user = users.document(user_info.get('id'))
+        a_user.update({'notif': user_info.get('notif', 0)+1})
 
         return {'id': file_id}
     except Exception as e:
@@ -88,4 +98,21 @@ def delete_file(request):
         traceback.print_exc()
         print(ex)
         return{'error': f"unable to delete file SEVER ERROR",
+                'status_code': 490}
+
+def get_notifications(request):
+    c_user = request.args.get('user')
+    try:
+        notifs = [note.to_dict() for note in notifications.where('user', '==', c_user).limit(5).get()]
+        user_info = users.where('email', '==', c_user).limit(1).get()[0].to_dict()
+        a_user = users.document(user_info.get('id'))
+        a_user.update({'notif': 0})
+        return {
+            'notifications': notifs
+        }
+    except Exception as ex:
+        import traceback
+        traceback.print_exc()
+        print(ex)
+        return{'error': f"unable to get notifications SEVER ERROR",
                 'status_code': 490}
