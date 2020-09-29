@@ -1,4 +1,4 @@
-from utils.users import signup_user_util, login_user_util, get_all_users_util
+from utils.users import signup_user_util, login_user_util, get_all_users_util, delete_user
 
 def register_user(request):
     signup_resp = signup_user_util(request)
@@ -28,3 +28,12 @@ def get_all_users(request):
         users_data['success'] = True
         users_data['status_code'] = 200
     return users_data
+
+def delete_user_view(request):
+    result = delete_user(request)
+    if "error" in result:
+        result['success'] = False
+    else:
+        result['success'] = True
+        result['status_code'] = 200
+    return result
