@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import $ from 'jquery';
 import '../Stylesheets/Assets.css'
 import '../Stylesheets/Register.css'
 import '../Stylesheets/Auth.css'
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useStateValue } from '../Data/StateProvider'
 import Loader from './Loader';
+import client from '../services/Client'
 
 function Register() {
     const [{}, dispatch] = useStateValue();
@@ -17,6 +21,13 @@ function Register() {
     const [confirm_password, setConfirmPassword] = useState(null);
     const [match_password, setMatchPassword] = useState(true);
     const [isloading, setIsloading] = useState(false);
+    const [users, setUsers] = useState([])
+    const [showUsers, setShowUsers] = useState(false)
+    const [fetchingInProgress, setFetchingInProgress] = useState(false);
+
+    useEffect(() => {
+        getUsers()
+    }, [])
 
     const toggleShowRegister = () => {
         dispatch({
@@ -25,12 +36,30 @@ function Register() {
         })
     }
 
-    const addUser = (user) => {
-        dispatch({
-            type: 'ADD_USER',
-            item: user
-        })
-    }
+    const deleteUser = (id, email) => {
+      setFetchingInProgress(true);
+      $.ajax({
+          url: `/users?id=${id}&email=${email}&user=${client.getUserData()}`, //TODO: update request URL
+          type: "DELETE",
+          dataType: 'json',
+          contentType: 'application/json',
+          xhrFields: {
+            withCredentials: true
+          },
+          crossDomain: true,
+          success: (result) => {
+            console.log(result)
+            getUsers()
+            return;
+          },
+          error: (error) => {
+            // console.log(error)
+            alert(error.responseJSON.error)
+            setFetchingInProgress(false);
+            return;
+          }
+      })
+  }
 
     const register = () => {
         if(password !== confirm_password){
@@ -55,6 +84,7 @@ function Register() {
             // addUser(result.user)
             setIsloading(false)
             toggleShowRegister();
+            getUsers()
             return;
           },
           error: (error) => {
@@ -65,6 +95,32 @@ function Register() {
           }
         })
       }
+
+      const getUsers = () => {
+        $.ajax({
+            url: `/users?user=${client.getUserData()}`, //TODO: update request URL
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            xhrFields: {
+              withCredentials: true
+            },
+            crossDomain: true,
+            success: (result) => {
+              console.log(result.users)
+              setUsers(result.users)
+              return;
+            },
+            error: (error) => {
+              // console.log(error)
+              // alert(error.responseJSON.message)
+            //   this.setState({
+            //     fetchingInProgress: false,
+            //   })
+              return;
+            }
+          })
+    }
 
     const  handleNameChange = (event) => {
         setName(event.target.value)
@@ -96,7 +152,7 @@ function Register() {
       return (
         <div className="register">
           
-            <div className="auth__image">
+            {!showUsers && (<><div className="auth__image">
                 <img src="../images/auth.png" alt=""/>
             </div>
             <form action="" className="auth__form">
@@ -135,6 +191,36 @@ function Register() {
                     </div>
                 </div>
             </form>
+            <div onClick={()=>{setShowUsers(true)}} className="register__expand-button">
+              <ExpandLessIcon />
+            </div>
+            </>)}
+            
+            {showUsers && (<div className="register__users">
+              <div onClick={()=>{setShowUsers(false)}} className="register__expand-button">
+              <ExpandMoreIcon />
+              </div>
+              <div className="register__users-list">
+                <div className="register__users-list-item">
+                  <span>Created at</span>
+                  <span>Name</span>
+                  <span>Email</span>
+                  <span>Admin</span>
+                  <span></span>
+                </div>
+                {users.length > 0 && users.map((item, ind) => (<div key={ind} className="register__users-list-item">
+                  <span>{item.created_at}</span>
+                  <span>{item.name}</span>
+                  <span>{item.email}</span>
+                  <span>{String(item.admin)}</span>
+                  <span>
+                    <div onClick={()=>{deleteUser(item.id, item.email)}} className="register__delete-button">
+                      <DeleteOutlineIcon />
+                    </div>
+                  </span>
+                </div>)) }
+              </div>
+            </div>)}
         </div>
     )
     }
