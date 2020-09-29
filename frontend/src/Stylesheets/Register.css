@@ -14,3 +14,61 @@
 .checkbox > input {
     width: 2rem;
 }
+.register__users {
+    display:  flex;
+    width: 100%;
+    height: 100%;
+}
+.register__users-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+    padding: none;
+    border: 2px solid var(--transparent-blue);
+}
+
+.register__users-list-item{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    border-top: 2px solid var(--transparent-blue);
+}
+
+.register__users-list-item > span {
+    width: 16rem;
+    overflow: hidden;
+    text-align: left;
+    padding: 1.5rem;
+    font-size: var(--fnt-normal);
+}
+
+.register__users-list-item > span:last-child {
+    text-align: right;
+}
+
+.register__users-list-item:first-child {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* .file__delete-buttone{
+    display: inline-block;
+} */
+.register__delete-button {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.1rem 0.2rem;
+    color: var(--faded-red);
+}
+
+.register__expand-button {
+    cursor: pointer;
+    padding: 0.5rem 0.7rem;
+    left: 50%;
+    top: 1rem;
+    position: absolute;
+}
