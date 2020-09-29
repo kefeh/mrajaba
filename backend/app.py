@@ -99,6 +99,21 @@ def delete_file():
     status_code = file_data.pop('status_code')
     return jsonify(file_data), status_code
 
+@app.route('/users', methods=['DELETE'])
+def delete_user():
+    from views.user import delete_user_view
+    delete_resp = delete_user_view(request)
+
+    status_code = delete_resp.pop('status_code')
+    return jsonify(delete_resp), status_code
+
+@app.route('/notifications', methods=['GET'])
+def get_notifications():
+    from views.files import get_notifications_view
+    notifs = get_notifications_view(request)
+
+    status_code = notifs.pop('status_code')
+    return jsonify(notifs), status_code
 
 @app.route('/status', methods=['GET'])
 def get_login_status():
