@@ -26,6 +26,7 @@ def signup_user_util(request):
             "email": email,
             "created_at": created_at,
             "admin": bool(admin),
+            "notif": 0,
         })
         return {
             "user": {
@@ -34,6 +35,7 @@ def signup_user_util(request):
                 "email": email,
                 "token": jwt,
                 "admin": bool(admin),
+                "notif": 0,
             }
         }
     except HTTPError as e:
@@ -98,6 +100,32 @@ def get_all_users_util(request):
         return{'error': f"unable to get user SEVER ERROR",
                 'status_code': 490}
 
+
+def delete_user(request):
+    email = request.args.get('email')
+    u_id = request.args.get('id')
+    c_user = request.args.get('user')
+    try:
+        user_info = users.where('email', '==', c_user).limit(1).get()[0].to_dict()
+        
+        if user_info['admin']:
+            user = f_auth.get_user_by_email(email)
+            users.document(u_id).delete()
+            f_auth.delete_user(user.uid)
+            # TODO: do recursive delete of files related to the user
+            return {
+                'id': u_id
+            }
+        else:
+            return {'error': f"You dont have permissions",
+                'status_code': 490}
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        print(e)
+        return{'error': f"unable to delete file SEVER ERROR",
+                'status_code': 490}
 
 def verify_token(id_token):
     print(id_token)
