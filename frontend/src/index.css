@@ -9,7 +9,7 @@
   --rusty-green-dark: #5E5E60;
   --transparent-blue: #E4EDFF;
   --transparent-black-21: rgba(0, 0, 0, 0.21);
-  --fnt-normal: 13px;
+  --fnt-normal: 14px;
 }
 html {
   background-color: var(--secondary-color);
