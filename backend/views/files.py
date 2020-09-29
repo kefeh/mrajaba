@@ -1,4 +1,4 @@
-from utils.files import add_file_util, get_files_util, delete_file
+from utils.files import add_file_util, get_files_util, delete_file, get_notifications
 from werkzeug.utils import secure_filename
 from utils.drive_init import get_files
 from config import BASE_PATH
@@ -41,3 +41,12 @@ def delete_file_view(request):
         result['success'] = True
         result['status_code'] = 200
     return result
+
+def get_notifications_view(request):
+    notifs = get_notifications(request)
+    if "error" in notifs:
+        notifs['success'] = False
+    else:
+        notifs['success'] = True
+        notifs['status_code'] = 200
+    return notifs
