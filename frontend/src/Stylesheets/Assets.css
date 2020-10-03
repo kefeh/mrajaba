@@ -75,7 +75,7 @@
 }
 
 .notifier::after{
-    content: "2"; /*TODO: remember to change this to dynamically change*/
+    content: attr(data-notif-count); /*TODO: remember to change this to dynamically change*/
     width: 1.4rem;
     height: 1.4rem;
     display: flex;
