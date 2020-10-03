@@ -9,15 +9,17 @@ import { useStateValue } from '../Data/StateProvider';
 import $ from 'jquery';
 
 import client from '../services/Client'
+import { useAsyncReference } from './AsyncReference';
 
 
 function ContentBody() {
-    const [{active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh, user}, dispatch] = useStateValue();
     
-    const [documents, setDocuments] = useState([]);
-    const [files, setFiles] = useState([]);
+    const [documents, setDocuments] = useAsyncReference([]);
+    const [files, setFiles] = useAsyncReference([]);
     const [fetchingInProgress, setFetchingInProgress] = useState(false);
-
+    const [, forceUpdate] = useState(false);
+    
     useEffect(() => {
         getFiles()
     }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh])
@@ -34,8 +36,8 @@ function ContentBody() {
             dataType: 'json',
             contentType: 'application/json',
             success: (result) => {
-              console.log(result.files)
               setFiles(result.files);
+              console.log(result.files)
               setFetchingInProgress(false);
               return;
             },
@@ -92,6 +94,12 @@ function ContentBody() {
         })
     }
 
+    const showNotification = () => {
+        dispatch({
+            type: 'SHOW_NOTIFICATION',
+        })
+    }
+
     // useCallback(
     //     getFiles,
     //     [active_user, active_class, active_nav, folder],
@@ -117,7 +125,7 @@ function ContentBody() {
                             <span>Resources</span>
                         </div>
                     </div>
-                    <div className="nav-top__notification circular-icon-holder notifier">
+                    <div onClick={showNotification} data-notif-count={user.notif} className={`nav-top__notification circular-icon-holder ${user.notif > 0? "notifier":""}`}>
                         <NotificationsNoneIcon className="icon"/>
                     </div>
                 </div>
@@ -144,7 +152,7 @@ function ContentBody() {
                 </div>
             </div>
             ):(
-                <ContentSection folders={documents} files={files} getFiles={getFiles} getFolders={getFolders} />
+                <ContentSection folders={documents.current} files={files.current} getFiles={getFiles} getFolders={getFolders} />
             )}
         </div>
     )
