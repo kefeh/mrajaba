@@ -2,8 +2,10 @@ import client from '../services/Client'
 
 export const initialState = {
     showRegister: false,
+    showNotification: false,
     showAddFolder: false,
     showAddFile: false,
+    showAddNews: false,
     fileType: '',
     user: {},
     active_user: '',
@@ -26,6 +28,16 @@ function reducer (state, action) {
                 ...state,
                 showAddFolder: true,
             };
+        case 'SHOW_ADD_NEWS':
+            return {
+                ...state,
+                showAddNews: true,
+            };
+        case 'SHOW_NOTIFICATION':
+            return {
+                ...state,
+                showNotification: true,
+            };
         case 'SHOW_ADD_FILE':
             return {
                 ...state,
@@ -35,6 +47,11 @@ function reducer (state, action) {
             return {
                 ...state,
                 showRegister: false,
+            };
+        case 'HIDE_NOTIFICATION':
+            return {
+                ...state,
+                showNotification: false,
             };
         case 'HIDE_ADD_FOLDER':
             return {
@@ -46,6 +63,11 @@ function reducer (state, action) {
                 ...state,
                 showAddFile: false,
             };
+        case 'HIDE_ADD_NEWS':
+            return {
+                ...state,
+                showAddNews: false,
+            };
         case 'ADD_USER':
             client.setDataAndToken(action.item)
             return {
@@ -55,7 +77,7 @@ function reducer (state, action) {
         case 'SET_USER':
             return {
                 ...state,
-                user: client.getUserData()
+                user: action.item
             }
         case 'ADD_ACTIVE_USER':
             return {
