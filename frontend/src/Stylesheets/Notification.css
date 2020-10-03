@@ -1,0 +1,44 @@
+.notifs {
+    /* position: absolute; */
+}
+.notifs_back {
+    background-color: var(--transparent-black-21);
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notif__body {
+    width: 40rem;
+    padding: 2rem 4rem;
+    /* height: 15rem; */
+    background-color: var(--primary-color);
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1rem;
+    position: absolute;
+    z-index: 2;
+}
+
+.notif__body > li {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    font-size: var(--fnt-normal);
+    text-align: left;
+}
+
+.notif__body > span{
+    margin-bottom: 2rem;
+    font-weight: bold;
+    color: var(--faded-red);
+}
