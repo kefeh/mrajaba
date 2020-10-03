@@ -8,13 +8,13 @@ import { useStateValue } from '../Data/StateProvider';
 import client from '../services/Client'
 
 function SideBar() {
-    const [{active_user, user}, dispatch] = useStateValue();
+    const [{active_user, refresh}, dispatch] = useStateValue();
 
     const [users, setUsers] = useState([])
 
     useEffect(() => {
         getUsers()
-    }, [])
+    }, [refresh])
     
     const getUsers = () => {
         $.ajax({
@@ -30,7 +30,15 @@ function SideBar() {
               console.log(result.users)
               setUsers(result.users)
               if(result.users.length > 0) {
-                  setActive(result.users[0].email)
+                  if (active_user === '') {
+                    setActive(result.users[0].email)
+                  }
+                  for(var i=0; i<result.users.length; i++) {
+                      if(result.users[i].email === client.getUserData()) {
+                          addUser(result.users[i]);
+                          break;
+                      }
+                  }
               }
               return;
             },
@@ -43,6 +51,13 @@ function SideBar() {
               return;
             }
           })
+    }
+
+    const addUser = (user) => {
+        dispatch({
+            type: 'SET_USER',
+            item: user
+        })
     }
 
     const setActive = (email) => {
