@@ -13,7 +13,7 @@ import { useAsyncReference } from './AsyncReference';
 
 
 function ContentBody() {
-    const [{active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh, user}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, active_folder, showAddFile, showAddFolder, refresh, user}, dispatch] = useStateValue();
     
     const [documents, setDocuments] = useAsyncReference([]);
     const [files, setFiles] = useAsyncReference([]);
@@ -22,16 +22,16 @@ function ContentBody() {
     
     useEffect(() => {
         getFiles()
-    }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh])
+    }, [active_user, active_class, active_nav, active_folder, showAddFile, showAddFolder, refresh])
 
     useEffect(() => {
         getFolders()
-    }, [active_user, active_class, active_nav, folder, showAddFile, showAddFolder, refresh])
+    }, [active_user, active_class, active_nav, active_folder, showAddFile, showAddFolder, refresh])
 
     const getFiles = () => {
         setFetchingInProgress(true);
         $.ajax({
-            url: `/files?class=${active_class}&category=${active_nav}&folder=${folder}&shared_to=${active_user}&user=${client.getUserData()}`, //TODO: update request URL
+            url: `/files?class=${active_class}&category=${active_nav}&folder=${active_folder.id}&shared_to=${active_user}&user=${client.getUserData()}`, //TODO: update request URL
             type: "GET",
             dataType: 'json',
             contentType: 'application/json',
@@ -52,7 +52,7 @@ function ContentBody() {
 
     const getFolders = () => {
         setFetchingInProgress(true);
-        if(folder || active_nav === 'Recently'){
+        if(active_folder.folder || active_nav === 'Recently'){
             setDocuments([]);
             return
         }

@@ -17,11 +17,11 @@ function Folder({a_folder}) {
             item: !(refresh),
         })
     }
-    const setFolder =(folder_name) => {
-        console.log(folder_name);
+    const setFolder =(folder_dict) => {
+        console.log(folder_dict);
         dispatch({
             type: 'ADD_ACTIVE_FOLDER',
-            item: folder_name
+            item: folder_dict
         })
     }
 
@@ -54,7 +54,7 @@ function Folder({a_folder}) {
             <div onClick={()=>{deleteFolder(a_folder.id)}} className="folder__delete-buttone">
                 <DeleteOutlineIcon />
             </div>
-            <div onClick={()=>{setFolder(a_folder.folder)}} className="folder__content">
+            <div onClick={()=>{setFolder(a_folder)}} className="folder__content">
                 <img src="../images/folder.png" alt="folder" />
             </div>
             <div className="folder__title">

@@ -4,7 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { useStateValue } from '../Data/StateProvider'
 
 function FloatingButton() {
-    const [{folder}, dispatch] = useStateValue();
+    const [{active_folder}, dispatch] = useStateValue();
 
     const toggleShowAddFolder = () => {
         dispatch({
@@ -23,7 +23,7 @@ function FloatingButton() {
     return (
         <div className="floating-action" >
             <div className="floating-action__side" >
-                {folder === '' && <div onClick={toggleShowAddFolder} className='btn btn__outline'>
+                {active_folder.folder === '' && <div onClick={toggleShowAddFolder} className='btn btn__outline'>
                     <span>Folder</span>
                 </div>}
                 <div onClick={toggleShowAddFile} className='btn btn__outline'>

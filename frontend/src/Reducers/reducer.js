@@ -11,7 +11,7 @@ export const initialState = {
     active_user: '',
     active_class: 'Administrative',
     active_nav: 'Recently',
-    folder: '',
+    active_folder: {id:'', folder:''},
     refresh: true,
     search_term: '',
 }
@@ -93,12 +93,12 @@ function reducer (state, action) {
             return {
                 ...state,
                 active_nav: action.item,
-                folder: '',
+                active_folder: {id:'', folder:''},
             }
         case 'ADD_ACTIVE_FOLDER':
             return {
                 ...state,
-                folder: action.item,
+                active_folder: action.item,
             }
         case 'SET_REFRESH':
             return {

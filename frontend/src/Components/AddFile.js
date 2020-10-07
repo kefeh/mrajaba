@@ -14,7 +14,7 @@ function AddFile() {
     const document = ".pdf,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     const images = "image/*"
     const videos = "video/*"
-    const [{active_user, active_class, active_nav, folder}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, active_folder}, dispatch] = useStateValue();
     
     var acceptType = ''
     if(active_nav === 'Documents'){
@@ -50,7 +50,7 @@ function AddFile() {
         data.append('shared_to', active_user);
         data.append('class', active_class);
         data.append('category', active_nav);
-        data.append('folder', folder);
+        data.append('folder', active_folder.id);
         $.ajax({
             type: "POST",
             url: "/upload",
