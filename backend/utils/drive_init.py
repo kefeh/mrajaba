@@ -82,9 +82,12 @@ def create_file(file_name, file_path, file_type):
         service.permissions().create(fileId=response.get('id'), body={'role':'reader', 'type': 'anyone'}).execute()
         return response.get('id'), 200
 
-def delete_file(fileId):
+def delete_drive_file(fileId):
     try:
-        results = service.files().delete(fileId=fileId).execute()
+        service.files().delete(fileId=fileId).execute()
         return True
     except Exception as e:
+        import traceback
+        traceback.print_exc()
+        print(e)
         return False
