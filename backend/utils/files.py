@@ -1,7 +1,7 @@
 from getpass import getpass
 from datetime import datetime
 from models import files, notifications, users
-from .drive_init import create_file, delete_file
+from .drive_init import create_file, delete_drive_file
 
 FILE_MIME_TYPE = {
     "Documents": 'application/*',
@@ -83,16 +83,37 @@ def get_files_util(request):
         return{'error': f"unable to get files SEVER ERROR",
                 'status_code': 490}
 
+def delete_each_file(file_id, file_drive_id):
+    try:
+        result = delete_drive_file(file_drive_id)
+        if result:
+            files.document(file_id).delete()
+            return {
+                'id': file_id,
+                'success': True
+            }
+        return {
+            'success': False
+        }
+    except Exception as ex:
+        import traceback
+        traceback.print_exc()
+        print(ex)
+        return{'success': False}
+
 def delete_file(request):
     try:
+        print(request.args.get('id'))
         file_id = request.args.get('id')
         doc_id = request.args.get('doc_id')
-        files.document(file_id).delete()
-        result = delete_file(doc_id)
-        # if resu
-        return {
-            'id': file_id
-        }
+        result = delete_each_file(file_id, doc_id)
+        if result.get('success'):
+            return {
+                'id': result.get('id')
+            }
+        else:
+            return{'error': f"unable to delete file SEVER ERROR",
+                'status_code': 490}
     except Exception as ex:
         import traceback
         traceback.print_exc()
