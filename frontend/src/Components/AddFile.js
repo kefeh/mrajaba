@@ -14,7 +14,7 @@ function AddFile() {
     const document = ".pdf,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     const images = "image/*"
     const videos = "video/*"
-    const [{active_user, active_class, active_nav, folder, user, showAddFile}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, folder}, dispatch] = useStateValue();
     
     var acceptType = ''
     if(active_nav === 'Documents'){
@@ -27,7 +27,7 @@ function AddFile() {
         acceptType=images
     }
     const [selectedFile, setSelectedFile] = useState(undefined);
-    const [progress, setProgress] = useState(0);
+    // const [progress, setProgress] = useState(0);
     const [showProgress, setShowProgress] = useState(false);
 
     const selectFile = (event) => {
@@ -62,15 +62,15 @@ function AddFile() {
                 xhr.onprogress = function e() {
                     // For downloads
                     if (e.lengthComputable) {
-                        setProgress(Math.round((e.loaded / e.total)*100))
-                        // console.log(e.loaded / e.total);
+                        // setProgress(Math.round((e.loaded / e.total)*100))
+                        console.log(e.loaded / e.total);
                     }
                 };
                 xhr.upload.onprogress = function (e) {
                     // For uploads
                     if (e.lengthComputable) {
-                        setProgress(Math.round((e.loaded / e.total)*100))
-                        // console.log(e.loaded / e.total);
+                        // setProgress(Math.round((e.loaded / e.total)*100))
+                        console.log(e.loaded / e.total);
                     }
                 };
                 return xhr;
