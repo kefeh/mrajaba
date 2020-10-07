@@ -10,7 +10,7 @@ import Loader from './Loader';
 import { Redirect } from 'react-router-dom';
 
 function Login() {
-    const [{}, dispatch] = useStateValue();
+    const [,dispatch] = useStateValue();
 
     // creating the states
     const [email, setEmail] = useState(null);

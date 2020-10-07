@@ -11,7 +11,7 @@ import Loader from './Loader';
 import client from '../services/Client'
 
 function Register() {
-    const [{}, dispatch] = useStateValue();
+    const [,dispatch] = useStateValue();
 
     // creating the states
     const [name, setName] = useState(null);
@@ -23,7 +23,6 @@ function Register() {
     const [isloading, setIsloading] = useState(false);
     const [users, setUsers] = useState([])
     const [showUsers, setShowUsers] = useState(false)
-    const [fetchingInProgress, setFetchingInProgress] = useState(false);
 
     useEffect(() => {
         getUsers()
@@ -37,7 +36,6 @@ function Register() {
     }
 
     const deleteUser = (id, email) => {
-      setFetchingInProgress(true);
       $.ajax({
           url: `/users?id=${id}&email=${email}&user=${client.getUserData()}`, //TODO: update request URL
           type: "DELETE",
@@ -55,7 +53,6 @@ function Register() {
           error: (error) => {
             // console.log(error)
             alert(error.responseJSON.error)
-            setFetchingInProgress(false);
             return;
           }
       })

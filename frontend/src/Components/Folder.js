@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../Stylesheets/Folder.css'
 import { useStateValue } from '../Data/StateProvider';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -8,9 +8,8 @@ import client from '../services/Client'
 
 function Folder({a_folder}) {
 
-    const [{active_user, active_class, active_nav, refresh, folder, showAddFile}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav, refresh}, dispatch] = useStateValue();
 
-    const [fetchingInProgress, setFetchingInProgress] = useState(false);
 
     const refresher = () => {
         dispatch({
@@ -27,7 +26,6 @@ function Folder({a_folder}) {
     }
 
     const deleteFolder = (id) => {
-        setFetchingInProgress(true);
         $.ajax({
             url: `/folders?id=${id}&class=${active_class}&category=${active_nav}&shared_to=${active_user}&user=${client.getUserData()}`, //TODO: update request URL
             type: "DELETE",
@@ -39,14 +37,12 @@ function Folder({a_folder}) {
             crossDomain: true,
             success: (result) => {
               console.log(result)
-              setFetchingInProgress(false);
               refresher();
               return;
             },
             error: (error) => {
               // console.log(error)
               // alert(error.responseJSON.message)
-              setFetchingInProgress(false)
               refresher();
               return;
             }

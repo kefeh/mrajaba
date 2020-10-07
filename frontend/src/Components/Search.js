@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useStateValue } from '../Data/StateProvider';
 
 function Search() {
-    const [{}, dispatch] = useStateValue();
+    const [,dispatch] = useStateValue();
 
     const handleChange = (event) => {
         console.log(event.target.value)

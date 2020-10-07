@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import '../Stylesheets/Assets.css'
 import '../Stylesheets/File.css'
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -9,7 +9,6 @@ import $ from 'jquery';
 
 function File({file}) {
     const [{refresh}, dispatch] = useStateValue();
-    const [fetchingInProgress, setFetchingInProgress] = useState(false);
     const icon_path = {
         "Documents": "../images/file.png",
         "Videos": "../images/video.png",
@@ -25,7 +24,6 @@ function File({file}) {
     }
 
     const deleteFile = (id, doc_id) => {
-        setFetchingInProgress(true);
         $.ajax({
             url: `/files?id=${id}&doc_id=${doc_id}`, //TODO: update request URL
             type: "DELETE",
@@ -37,14 +35,12 @@ function File({file}) {
             crossDomain: true,
             success: (result) => {
               console.log(result)
-              setFetchingInProgress(false);
               refresher();
               return;
             },
             error: (error) => {
               // console.log(error)
               alert(error.responseJSON.error)
-              setFetchingInProgress(false);
               refresher();
               return;
             }
