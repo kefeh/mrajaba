@@ -49,6 +49,7 @@ def get_folders_util(request):
                 'status_code': 490}
 
 def delete_folder(request):
+    from .files import delete_each_file
     try:
         folder_id = request.args.get('id')
         folder_name = request.args.get('name')
@@ -56,14 +57,11 @@ def delete_folder(request):
         folder_shared_to = request.args.get('shared_to')
         folder_class = request.args.get('class')
         folder_category = request.args.get('category')
-        file_list = files.where(
-                'user', '==', folder_user).where('shared_to', '==', folder_shared_to).where(
-                    'class', '==', folder_class).where(
-                        'category', '==', folder_category).where(
-                            'folder', '==', folder_name).get()
+        file_list = files.where('folder', '==', folder_id).get()
         for doc in file_list:
-            print(f'Deleting doc {doc.id} => {doc.to_dict()}')
-            doc.reference.delete()
+            delete_file = doc.to_dict()
+            print(f"Deleting doc {delete_file.get('id')} => {delete_file}")
+            delete_each_file(delete_file.get('id'), delete_file.get('doc_id'))
         the_folder = folders.document(folder_id)
         the_folder.delete()
         return {
