@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback }  from 'react'
+import React, { useState, useEffect }  from 'react'
 import '../Stylesheets/ContentBody.css';
 import '../Stylesheets/Assets.css';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
@@ -18,7 +18,7 @@ function ContentBody() {
     const [documents, setDocuments] = useAsyncReference([]);
     const [files, setFiles] = useAsyncReference([]);
     const [fetchingInProgress, setFetchingInProgress] = useState(false);
-    const [, forceUpdate] = useState(false);
+    // const [, forceUpdate] = useState(false);
     
     useEffect(() => {
         getFiles()
