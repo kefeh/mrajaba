@@ -8,7 +8,7 @@ import { useStateValue } from '../Data/StateProvider'
 import client from '../services/Client'
 
 function AddFolder() {
-    const [{active_user, active_class, active_nav, showAddFolder}, dispatch] = useStateValue();
+    const [{active_user, active_class, active_nav}, dispatch] = useStateValue();
 
     // creating the states
     const [folder, setFolder] = useState(null);
