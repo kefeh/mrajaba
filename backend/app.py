@@ -124,6 +124,31 @@ def get_login_status():
         return jsonify({"user": value}), status_code
     return jsonify({"message": value}), status_code
 
+@app.route('/news', methods=['GET'])
+def get_news():
+    print("started")
+    from views.news import get_news_view
+    news_data = get_news_view(request)
+
+    status_code = news_data.pop('status_code')
+    return jsonify(news_data), status_code
+
+@app.route('/news', methods=['DELETE'])
+def delete_news():
+    from views.news import delete_news_view
+    delete_resp = delete_news_view(request)
+
+    status_code = delete_resp.pop('status_code')
+    return jsonify(delete_resp), status_code
+
+@app.route('/news', methods=['POST'])
+def add_news():
+    from views.news import add_news
+    news_resp = add_news(request)
+
+    status_code = news_resp.pop('status_code')
+    return jsonify(news_resp), status_code
+
 @app.route('/delete', methods=['GET', 'DELETE'])
 def delete():
     """
