@@ -1,30 +1,87 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import $ from 'jquery';
 import '../Stylesheets/News.css'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { useStateValue } from '../Data/StateProvider'
 
 function News() {
+
+    const [,dispatch] = useStateValue();
+
+    const toggleShowAddNews = () => {
+        dispatch({
+            type: 'SHOW_ADD_NEWS',
+            item: true
+        })
+    }
+
+    const [newsItems, setNewsItems] = useState([]);
+    const [newsCurrentIndex, setNewsCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        getNewsItems()
+    }, [])
+
+    const getNewsItems = () => {
+        $.ajax({
+            url: `/news`, //TODO: update request URL
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            xhrFields: {
+            withCredentials: true
+            },
+            crossDomain: true,
+            success: (result) => {
+            console.log(result.news)
+            setNewsItems(result.news)
+            return;
+            },
+            error: (error) => {
+            // console.log(error)
+            alert(error.responseJSON.error)
+            //   this.setState({
+            //     fetchingInProgress: false,
+            //   })
+            return;
+            }
+        })
+    }
+
+    const changeIndex = (value) => {
+        var index = 0
+        if(value === 'add'){
+            index = (newsCurrentIndex + 1) % newsItems.length
+        }else{
+            index = newsCurrentIndex === 0?newsItems.length - 1 : newsCurrentIndex - 1;
+        }
+        setNewsCurrentIndex(index)
+    }
+
     return (
         <div className="news">
-            <div className='btn btn__primary news__btn'>
+            <div onClick={toggleShowAddNews} className='btn btn__primary news__btn'>
                 <span>new</span>
             </div>
             <div className="news__content">
                 <div className="news__content-title">
                     News
                 </div>
-                <div className="news__content-body">
-                    <ArrowBackIosIcon />
-                    <span className="news__content-body-text">
-                    Content inserted in this way isn’t really in the DOM, so it has some limitations. For instance, you can’t 
-                    attach an event directly (only) to a pseudo-elements. It is also inconsistent whether or not text inserted 
-                    `in this way is read by screen readers (it usually is these days) or if you can select it (it usually isn’t these days). 
-                    This is literally an image on the page like would be. It could also be a gradient. Note that you cannot change the dimensions
-                     of the image when inserted this way. You could also insert an image by using an empty string for the content, making it display: 
-                     block in some way, sizing it, and using background-image. That way you could re-size it with background-size.
-                    </span>
-                    <ArrowForwardIosIcon />
-                </div>
+                {newsItems.length > 0 && (
+                    <div className="news__content-body">
+                        <div onClick={()=>{changeIndex(``)}}>
+                            <ArrowBackIosIcon />
+                        </div>
+                        <span className="news__content-body-text">
+                        {newsItems[newsCurrentIndex].news}
+                        </span>
+
+                        <div onClick={()=>{changeIndex(`add`)}}>
+                            <ArrowForwardIosIcon />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )
