@@ -3,14 +3,23 @@ import os
 from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
 
+from flask import send_from_directory
+
 # Initialize Flask app
-app = Flask(__name__) 
+app = Flask(__name__, static_folder="../frontend/build",
+                static_url_path="") 
 
 # Initialize Firestore DB
 
-@app.route('/')
-def hello():
-    return "Hello World!"
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def hello(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        file_name = path.split("/")[-1]
+        dir_name = os.path.join(
+            app.static_folder, "/".join(path.split("/")[:-1]))
+        return send_from_directory(dir_name, file_name)
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/register', methods=['POST'])
 def create_user():
