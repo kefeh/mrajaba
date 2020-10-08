@@ -1,0 +1,120 @@
+.addNews {
+    /* background-color: var(--transparent-black-21); */
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    /* z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+.news_back {
+    background-color: var(--transparent-black-21);
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addNews__form {
+    width: 80rem;
+    background-color: var(--primary-color);
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%); 
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1rem;
+    padding-bottom: 2rem;
+}
+
+.addNews__buttons {
+    margin-top: 2rem;
+    margin-left: 6rem;
+}
+.addNews__buttons > div {
+    margin-left: 2rem;
+}
+.auth__form-email-news > label {
+    margin-top: 2rem;
+}
+
+
+.news_view-list {
+    width: 80rem;
+    background-color: var(--primary-color);
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%); 
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1rem;
+    padding-bottom: 2rem;
+    border: 2px solid var(--transparent-blue);
+}
+
+.news_view-list-item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-top: 2px solid var(--transparent-blue);
+}
+
+.news_view-list-item > span {
+    width: 16rem;
+    overflow: hidden;
+    text-align: left;
+    padding: 1.5rem;
+    font-size: var(--fnt-normal);
+}
+
+.news_view-list-item > span:last-child {
+    text-align: right;
+}
+
+.first-child {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* .file__delete-buttone{
+    display: inline-block;
+} */
+.news_view__delete-button {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.1rem 0.2rem;
+    color: var(--faded-red);
+}
+
+.news_view__expand-button {
+    cursor: pointer;
+    padding: 0.5rem 0.7rem;
+    /* left: 50%;
+    top: 1rem;
+    position: absolute; */
+}
+
+textarea {
+    width: 600px;
+	height: 120px;
+	border: 2px solid rgb(59, 56, 56);
+    padding: 5px;
+    border-radius: 0.5rem;
+    font-family: 'Roboto';
+}
