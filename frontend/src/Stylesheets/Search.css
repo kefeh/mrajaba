@@ -25,7 +25,7 @@
 .search__form-icon  {
     color: var(--rusty-green-dark);
     margin-right: -2rem;
-    z-index: 11111;
+    z-index: 1;
     cursor: pointer;
 }
 
