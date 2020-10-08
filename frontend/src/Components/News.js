@@ -34,7 +34,7 @@ function News() {
             },
             crossDomain: true,
             success: (result) => {
-            console.log(result.news)
+            // console.log(result.news)
             setNewsItems(result.news)
             return;
             },

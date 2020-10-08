@@ -27,7 +27,7 @@ function SideBar() {
             },
             crossDomain: true,
             success: (result) => {
-              console.log(result.users)
+            //   console.log(result.users)
               setUsers(result.users)
               if(result.users.length > 0) {
                   if (active_user === '') {

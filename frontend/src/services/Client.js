@@ -81,7 +81,7 @@ class Client {
     }
 
     isLoggedIn = () => {
-        console.log(this.getUserData())
+        // console.log(this.getUserData())
         // var boolean = this.getStatus()
     //   this.getStatus()
       // console.log(localStorage.getItem(this.LOCAL_STORAGE_LOGIN_DATA))

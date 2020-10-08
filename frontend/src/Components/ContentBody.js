@@ -37,7 +37,7 @@ function ContentBody() {
             contentType: 'application/json',
             success: (result) => {
               setFiles(result.files);
-              console.log(result.files)
+            //   console.log(result.files)
               setFetchingInProgress(false);
               return;
             },
@@ -66,7 +66,7 @@ function ContentBody() {
             },
             crossDomain: true,
             success: (result) => {
-              console.log(result.foldrs)
+            //   console.log(result.foldrs)
               setDocuments(result.folders);
               setFetchingInProgress(false);
               return;

@@ -1,6 +1,3 @@
-.notifs {
-    /* position: absolute; */
-}
 .notifs_back {
     background-color: var(--transparent-black-21);
     height: 100vh;
